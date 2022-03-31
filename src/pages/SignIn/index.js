@@ -4,11 +4,24 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import * as Animatable from 'react-native-animatable'
 import { Touchable } from 'react-native-web';
 
+import { useNavigation } from '@react-navigation/native'
+
 export default function SignIn() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-        <Text style={styles.message}>Bem-vindo(a)</Text>
+        <Text style={styles.message}>Bem-vindo(a), informe se você é:</Text>
+      </Animatable.View>
+
+      <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerCliente}>
+        <TouchableOpacity style={styles.buttonCliente} >
+          <Text style={styles.clienteText}>Laboratório</Text>
+        </TouchableOpacity>  
+        <TouchableOpacity style={styles.buttonCliente} >
+          <Text style={styles.clienteText}>Paciente</Text>
+        </TouchableOpacity>  
       </Animatable.View>
 
       <Animatable.View animation="fadeInUp" style={styles.containerForm}>
@@ -28,7 +41,10 @@ export default function SignIn() {
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>  
 
-        <TouchableOpacity style={styles.buttonRegister}>
+        <TouchableOpacity 
+          style={styles.buttonRegister}
+          onPress={ () => navigation.navigate('Cadastro')}
+        >
           <Text style={styles.registerText}>Não possui uma conta? Cadastre-se</Text>
         </TouchableOpacity>  
         
@@ -48,7 +64,7 @@ const styles = StyleSheet.create({
     paddingStart: '5%',
    },
    message:{
-     fontSize: 28,
+     fontSize: 24,
       fontWeight: 'bold',
       color: '#FFF'
    },
@@ -90,5 +106,19 @@ const styles = StyleSheet.create({
    },
    registerText: {
      color: '#a1a1a1'
-   }
+   },
+   containerCliente: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+   },
+   buttonCliente: {
+    marginTop: 14,
+    alignSelf: 'center',
+    paddingBottom: 13
+  },
+  clienteText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20
+  },
 })
