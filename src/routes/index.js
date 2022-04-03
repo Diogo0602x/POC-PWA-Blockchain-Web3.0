@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Welcome from '../pages/Welcome';
-import SignIn from '../pages/SignIn';
+import Login from '../pages/Login';
 import Cadastro from '../pages/Cadastro';
 
 
@@ -17,8 +17,8 @@ export default function Routes(){
       />
 
       <Stack.Screen
-        name="SignIn"
-        component={SignIn}
+        name="Login"
+        component={Login}
         options={{ headerShown: false}}
       />
 

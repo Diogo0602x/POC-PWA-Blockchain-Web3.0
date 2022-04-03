@@ -6,7 +6,7 @@ import { Touchable } from 'react-native-web';
 
 import { useNavigation } from '@react-navigation/native'
 
-export default function SignIn() {
+export default function Login() {
   const navigation = useNavigation();
 
   const [nome, setNome] = useState('');
@@ -18,13 +18,13 @@ export default function SignIn() {
 
   const cadastro = () => {
     alert('Cadastro realizado com sucesso')
-    navigation.navigate('SignIn')
+    navigation.navigate('Login')
   }
 
   return (
     <View style={styles.container}>
       <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-        <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../assets/logo.png')} />
+        <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
         <Text style={styles.message}>Informe seus dados para cadastro:</Text>
       </Animatable.View>
 
@@ -39,7 +39,7 @@ export default function SignIn() {
         
 
         <TouchableOpacity style={styles.button}  onPress={ () => cadastro()}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
+          <Text style={styles.buttonText}>Atualizar</Text>
         </TouchableOpacity>  
 
       </Animatable.View>

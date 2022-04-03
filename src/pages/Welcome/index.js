@@ -19,9 +19,9 @@ export default function Welcome() {
 
       <View style={styles.containerLogo}> 
         <Animatable.Image
-        animation="flipInY"
-          source={require('../../assets/logo.png')}
-          style={{ width: '100%'}}
+          animation="flipInY"
+          source={require('../../../assets/logo.png')}
+          style={{ width: '100%', height: '60%' }}
           resizeMode="contain"
         />
       </View>
@@ -33,7 +33,7 @@ export default function Welcome() {
 
       <TouchableOpacity 
       style={styles.button}
-      onPress={ () => navigation.navigate('SignIn')}
+      onPress={ () => navigation.navigate('Login')}
       >
         <Text style={styles.buttonText}>Acessar</Text>
       </TouchableOpacity>
