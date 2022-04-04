@@ -7,11 +7,13 @@ import { Touchable } from 'react-native-web';
 
 import { StatusBar } from 'expo-status-bar';
 
+import { useNavigation } from '@react-navigation/native'
+
 // formik
 import { Formik } from 'formik';
 
 // icons
-import {Octicons} from '@expo/vector-icons';
+import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
 
 import {
   StyledContainer, 
@@ -26,19 +28,23 @@ import {
   RightIcon,
   StyledButton, 
   ButtonText,
+  Colors,
   MsgBox,
   Line,
-  Colors
+  ExtraView,
+  ExtraText,
+  TextLink,
+  TextLinkContent
 } from '../../../components/styles';
 
 import MyTextInput from '../MyTextInput';
 
 // colors
-const {brand, darkLight} = Colors;
+const {brand, darkLight, primary} = Colors;
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
-
+  const navigation = useNavigation();
 
   return (
     <StyledContainer>
@@ -89,9 +95,16 @@ const Login = () => {
                   <ButtonText>Login </ButtonText>
                 </StyledButton>
                 <Line/>
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Entrar com Gov.br </ButtonText>
+                <StyledButton google={true} onPress={handleSubmit}>
+                  <Fontisto name="google" color="white" size={25} />
+                  <ButtonText google={true} >Entrar com Google </ButtonText>
                 </StyledButton>
+                <ExtraView>
+                  <ExtraText>Não possui conta?</ExtraText>
+                  <TextLink>
+                    <TextLinkContent onPress={ () => navigation.navigate('Cadastro')}>Signup</TextLinkContent>
+                  </TextLink>
+                </ExtraView>
               </StyledFormArea>
             )}
           </Formik>

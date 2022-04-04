@@ -1,51 +1,117 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
+
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import * as Animatable from 'react-native-animatable'
 import { Touchable } from 'react-native-web';
 
+import { StatusBar } from 'expo-status-bar';
+
 import { useNavigation } from '@react-navigation/native'
 
-export default function Login() {
+// formik
+import { Formik } from 'formik';
+
+// icons
+import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
+
+import {
+  StyledContainer, 
+  InnerContainer, 
+  PageLogo, 
+  PageTitle, 
+  SubTitle, 
+  StyledFormArea, 
+  LeftIcon, 
+  StyledInputLabel, 
+  StyledTextInput, 
+  RightIcon,
+  StyledButton, 
+  ButtonText,
+  Colors,
+  MsgBox,
+  Line,
+  ExtraView,
+  ExtraText,
+  TextLink,
+  TextLinkContent
+} from '../../../components/styles';
+
+import MyTextInput from '../MyTextInput';
+
+// colors
+const {brand, darkLight, primary} = Colors;
+
+const Cadastro = () => {
+  const [hidePassword, setHidePassword] = useState(true);
   const navigation = useNavigation();
 
-  const [nome, setNome] = useState('');
-  const [CPF, setCPF] = useState('');
-  const [dataNascimento, setdataNascimento] = useState('');
-  const [email, setEmail] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [senha, setSenha] = useState('');
-
-  const cadastro = () => {
-    alert('Cadastro realizado com sucesso')
-    navigation.navigate('Login')
-  }
-
   return (
-    <View style={styles.container}>
-      <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-        <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
-        <Text style={styles.message}>Informe seus dados para cadastro:</Text>
-      </Animatable.View>
+    <StyledContainer>
+      <StatusBar style="dark"/>
+      <InnerContainer>
+        <View>
+        <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+          <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
+          <Text style={styles.message}>Medicine Labs</Text>
+          <Text style={styles.message}>Account Cadastro</Text>
+        </Animatable.View>
+        </View>
 
-      <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-        <TextInput placeholder="Digite seu nome" placeholderTextColor="white" style={styles.textInput} onChangeText={text=>setNome(text)} />
-        <TextInput placeholder="Digite seu CPF" placeholderTextColor="white" style={styles.textInput} onChangeText={text=>setCPF(text)} />
-        <TextInput placeholder="Digite sua data de nascimento" placeholderTextColor="white" style={styles.textInput} onChangeText={text=>setdataNascimento(text)} />
-        <TextInput placeholder="Digite seu email" placeholderTextColor="white" style={styles.textInput} onChangeText={text=>setEmail(text)} />
-        <TextInput placeholder="Digite seu número de telefone" placeholderTextColor="white" style={styles.textInput} onChangeText={text=>setTelefone(text)} />
-        <TextInput secureTextEntry={true} placeholder="Digite sua senha" placeholderTextColor="white" style={styles.textInput} onChangeText={text=>setSenha(text)} />
-        <TextInput secureTextEntry={true} placeholder="Confirme sua senha" placeholderTextColor="white"  style={styles.textInput} onChangeText={text=>setSenha(text)} />
-        
+          <Formik
+            initialValues={{email: '', password: ''}}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <StyledFormArea>
+                <MyTextInput
+                  label="Email Address"
+                  icon="mail"
+                  placeholder="your@email.com"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType="email-address"
+                />
 
-        <TouchableOpacity style={styles.button}  onPress={ () => cadastro()}>
-          <Text style={styles.buttonText}>Atualizar</Text>
-        </TouchableOpacity>  
-
-      </Animatable.View>
-    </View>
+                <MyTextInput
+                  label="Password"
+                  icon="lock"
+                  placeholder="* * * * * * * * *"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  secureTextEntry={hidePassword}
+                  isPassword={true}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                />
+                <MsgBox>...</MsgBox>
+                <StyledButton onPress={handleSubmit}>
+                  <ButtonText>Cadastro </ButtonText>
+                </StyledButton>
+                <Line/>
+                <StyledButton google={true} onPress={handleSubmit}>
+                  <Fontisto name="google" color="white" size={25} />
+                  <ButtonText google={true} >Entrar com Google </ButtonText>
+                </StyledButton>
+                <ExtraView>
+                  <ExtraText>Não possui conta?</ExtraText>
+                  <TextLink>
+                    <TextLinkContent >Signup</TextLinkContent>
+                  </TextLink>
+                </ExtraView>
+              </StyledFormArea>
+            )}
+          </Formik>
+        </InnerContainer>
+    </StyledContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container:{
@@ -66,66 +132,6 @@ const styles = StyleSheet.create({
      alignItems: 'center',
      marginLeft: 7
   },
-  containerForm: {
-    backgroundColor: '#FFF',
-    flex: 1,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    paddingStart: '5%',
-    paddingEnd: '5%'
-  },
-  title: {
-    fontSize: 20,
-    marginTop: 28
-  },
-  input: {
-    borderBottomWidth: 1,
-    height: 40,
-    marginBottom: 12,
-    fontSize: 16
-  },
-  button: {
-    backgroundColor: '#0f5a61',
-    width: '100%',
-    borderRadius: 4,
-    paddingVertical: 8,
-    marginTop: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
-  },
-  buttonText:{
-  color: '#FFF',
-  fontSize: 18,
-  fontWeight: 'bold',
-  },
-  buttonRegister: {
-    marginTop: 14,
-    alignSelf: 'center'
-  },
-  textInput: {
-    width: '100%',
-    height: 40,
-    backgroundColor: '#39A69D',
-    borderRadius: 20,
-    paddingLeft: 10,
-    marginBottom: 10,
-    color: '#000'
-  },
-  buttonCadastro: {
-    width: '100%',
-    height: 40,
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    justifyContent: 'center'
-  },
-  containerForm: {
-    backgroundColor: '#FFF',
-    flex: 1,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingStart: '5%',
-    paddingEnd: '5%',
-    paddingTop: 25
-  },
 })
+
+export default Cadastro;

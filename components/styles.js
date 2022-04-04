@@ -56,6 +56,7 @@ export const StyledFormArea = styled.View`
 export const StyledTextInput = styled.TextInput`
   background-color: ${secondary};
   padding: 15px;
+  padding-left: 55px;
   padding-right: 55px;
   border-radius: 5px;
   font-size: 16px;
@@ -72,12 +73,15 @@ export const StylexInputLable = styled.Text`
 `;
 
 export const LeftIcon = styled.View`
-  margin-right: 16px;
+  left: 15px;
+  top: 17px;
+  position: absolute;
+  z-index: 1;
 `;
 
 export const RightIcon = styled.TouchableOpacity`
   right: 15px;
-  top: 15px;
+  top: 17px;
   position: absolute;
   z-index: 1;
 `;
@@ -86,15 +90,25 @@ export const StyledButton = styled.TouchableOpacity`
   padding: 15px;
   background-color: ${ brand };
   justify-content: center;
+  align-items: center;
   border-radius: 5px;
   margin-vertical: 5px;
   height: 60px;
+
+  ${(props) => props.google === true && `
+    background-color: ${brand};
+    flex-direction: row;
+    justify-content: center;  
+  `}
 `;
 
 export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
-  text-align: center
+
+  ${(props) => props.google === true && `
+    padding: 5px;
+  `}
 `;
 
 export const MsgBox = styled.Text`
@@ -107,4 +121,29 @@ export const Line = styled.View`
   width: 100%;
   background-color: #9CA3AF;
   margin-vertical: 10px;
+`;
+
+export const ExtraView = styled.View`
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+`;
+
+export const ExtraText = styled.Text`
+  justify-content: center;
+  align-content: center;
+  color: ${tertiary};
+  font-size: 15px;
+`;
+
+export const TextLink = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TextLinkContent = styled.Text`
+  color: ${brand};
+  font-size: 15px;
+  padding-left: 5px;
 `;
