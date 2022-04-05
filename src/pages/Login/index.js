@@ -36,10 +36,12 @@ import {
   ExtraView,
   ExtraText,
   TextLink,
-  TextLinkContent
+  TextLinkContent,
 } from '../../../components/styles';
 
 import MyTextInput from '../MyTextInput';
+
+import { ContainerHeader } from './styles';
 
 // colors
 const {brand, darkLight, primary} = Colors;
@@ -55,7 +57,7 @@ const Login = () => {
       <StatusBar style="dark"/>
       <InnerContainer>
         <View>
-        <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+        <ContainerHeader animation="fadeInLeft" delay={500}>
           <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
           <PageTitle>Medicine Labs</PageTitle>
           <SubTitle>Você é:</SubTitle>
@@ -75,7 +77,7 @@ const Login = () => {
             />
             <Text style={{fontWeight: 'bold', fontSize: 15}}>Paciente</Text>
           </View>
-        </Animatable.View>
+        </ContainerHeader>
         </View>
 
           <Formik
@@ -159,26 +161,5 @@ const Login = () => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#38A69D',
-    justifyContent: 'center'
-  },
-  containerHeader:{
-    marginTop: '5%',
-    marginBottom: '8%',
-    paddingStart: '5%',
-    flexDirection: 'column',
-  },
-  message:{
-    fontSize: 22,
-     fontWeight: 'bold',
-     color: '#FFF',
-     alignItems: 'center',
-     marginLeft: 7
-  },
-})
 
 export default Login;

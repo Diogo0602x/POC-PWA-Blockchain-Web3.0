@@ -63,7 +63,7 @@ const Login = () => {
         </View>
 
           <Formik
-            initialValues={{CPF: '',CNPJ:'', password: ''}}
+            initialValues={{CPF: '',CNPJ:'', password: '', passwordConfirm: ''}}
             onSubmit={(values) => {
               console.log(values);
             }}
@@ -99,9 +99,9 @@ const Login = () => {
                   icon="lock"
                   placeholder="* * * * * * * * *"
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
+                  onChangeText={handleChange('passwordConfirm')}
+                  onBlur={handleBlur('passwordConfirm')}
+                  value={values.passwordConfirm}
                   secureTextEntry={hidePassword}
                   isPassword={true}
                   hidePassword={hidePassword}

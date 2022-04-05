@@ -1,16 +1,5 @@
 import styled from 'styled-components/native';
 
-import { StyleSheet } from 'react-native';
-
-export const styles = StyleSheet.create({
-    containerHeader:{
-        marginTop: '5%',
-        marginBottom: '8%',
-        paddingStart: '5%',
-        flexDirection: 'column',
-    },
-})
-
 export const containerHeader = styled.View`
     
 `;
