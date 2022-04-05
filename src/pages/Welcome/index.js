@@ -44,17 +44,17 @@ export default function Welcome() {
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    backgroundColor: '#38A69D'
+    backgroundColor: '#FFF'
   },
   containerLogo: {
     flex: 2,
-    backgroundColor: '#38A69D',
+    backgroundColor: '#FFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   containerForm: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#38A69D',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingStart: '5%',
@@ -65,13 +65,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 28,
     marginBottom: 12,
+    color: '#FFF'
   },
   text: {
-    color:'#a1a1a1'
+    color:'#FFF'
   },
   button: {
     position: 'absolute',
-    backgroundColor: '#38A69D',
+    backgroundColor: '#FFF',
     borderRadius: 50,
     paddingVertical: 8,
     width: '60%',
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   },
   buttonText:{
     fontSize: 18,
-    color: '#FFF',
+    color: '#38A69D',
     fontWeight: 'bold'
   }
 })

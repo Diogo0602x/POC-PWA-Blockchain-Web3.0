@@ -47,6 +47,7 @@ export const SubTitle = styled.Text`
   letter-spacing: 1px;
   font-weight: bold;
   color: ${tertiary};
+  text-align: center;
 `;
 
 export const StyledFormArea = styled.View`

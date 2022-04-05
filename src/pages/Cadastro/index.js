@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import * as Animatable from 'react-native-animatable'
 import { Touchable } from 'react-native-web';
@@ -8,6 +8,8 @@ import { Touchable } from 'react-native-web';
 import { StatusBar } from 'expo-status-bar';
 
 import { useNavigation } from '@react-navigation/native'
+
+import { RadioButton} from 'react-native-paper'
 
 // formik
 import { Formik } from 'formik';
@@ -42,24 +44,26 @@ import MyTextInput from '../MyTextInput';
 // colors
 const {brand, darkLight, primary} = Colors;
 
-const Cadastro = () => {
+const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
+  const [checked, setChecked] = useState('laboratorio')
   const navigation = useNavigation();
 
   return (
+    <ScrollView>
     <StyledContainer>
       <StatusBar style="dark"/>
       <InnerContainer>
         <View>
         <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
           <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
-          <Text style={styles.message}>Medicine Labs</Text>
-          <Text style={styles.message}>Account Cadastro</Text>
+          <PageTitle>Medicine Labs</PageTitle>
+          <SubTitle>Digite suas informações</SubTitle>
         </Animatable.View>
         </View>
 
           <Formik
-            initialValues={{email: '', password: ''}}
+            initialValues={{CPF: '',CNPJ:'', password: ''}}
             onSubmit={(values) => {
               console.log(values);
             }}
@@ -67,18 +71,31 @@ const Cadastro = () => {
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <MyTextInput
-                  label="Email Address"
-                  icon="mail"
-                  placeholder="your@email.com"
+                  label="CPF"
+                  icon="shield"
+                  placeholder="XXX.XXX.XXX-XX"
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                  keyboardType="email-address"
+                  onChangeText={handleChange('CPF')}
+                  onBlur={handleBlur('CPF')}
+                  value={values.CPF}
+                  keyboardType="numeric"
                 />
 
                 <MyTextInput
-                  label="Password"
+                  label="Digite sua nova senha"
+                  icon="lock"
+                  placeholder="* * * * * * * * *"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  secureTextEntry={hidePassword}
+                  isPassword={true}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                />
+                <MyTextInput
+                  label="Confirme sua senha"
                   icon="lock"
                   placeholder="* * * * * * * * *"
                   placeholderTextColor={darkLight}
@@ -92,24 +109,14 @@ const Cadastro = () => {
                 />
                 <MsgBox>...</MsgBox>
                 <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Cadastro </ButtonText>
+                  <ButtonText>Recuperar</ButtonText>
                 </StyledButton>
-                <Line/>
-                <StyledButton google={true} onPress={handleSubmit}>
-                  <Fontisto name="google" color="white" size={25} />
-                  <ButtonText google={true} >Entrar com Google </ButtonText>
-                </StyledButton>
-                <ExtraView>
-                  <ExtraText>Não possui conta?</ExtraText>
-                  <TextLink>
-                    <TextLinkContent >Signup</TextLinkContent>
-                  </TextLink>
-                </ExtraView>
               </StyledFormArea>
             )}
           </Formik>
         </InnerContainer>
     </StyledContainer>
+    </ScrollView>
   );
 };
 
@@ -134,4 +141,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Cadastro;
+export default Login;

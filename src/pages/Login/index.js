@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import * as Animatable from 'react-native-animatable'
 import { Touchable } from 'react-native-web';
@@ -8,6 +8,8 @@ import { Touchable } from 'react-native-web';
 import { StatusBar } from 'expo-status-bar';
 
 import { useNavigation } from '@react-navigation/native'
+
+import { RadioButton} from 'react-native-paper'
 
 // formik
 import { Formik } from 'formik';
@@ -44,38 +46,82 @@ const {brand, darkLight, primary} = Colors;
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
+  const [checked, setChecked] = useState('laboratorio')
   const navigation = useNavigation();
 
   return (
+    <ScrollView>
     <StyledContainer>
       <StatusBar style="dark"/>
       <InnerContainer>
         <View>
         <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
           <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
-          <Text style={styles.message}>Medicine Labs</Text>
-          <Text style={styles.message}>Account Login</Text>
+          <PageTitle>Medicine Labs</PageTitle>
+          <SubTitle>Você é:</SubTitle>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RadioButton
+              value="laboratorio"
+              status={checked === 'laboratorio' ? 'checked' : 'unchacked'}
+              onPress={() => setChecked('laboratorio')}
+              color="#38A69D"
+            />
+            <Text style={{fontWeight: 'bold', fontSize: 15}}>Laboratorio</Text>
+            <RadioButton
+              value="paciente"
+              status={checked === 'paciente' ? 'checked' : 'unchacked'}
+              onPress={() => setChecked('paciente')}
+              color="#38A69D"
+            />
+            <Text style={{fontWeight: 'bold', fontSize: 15}}>Paciente</Text>
+          </View>
         </Animatable.View>
         </View>
 
           <Formik
-            initialValues={{email: '', password: ''}}
+            initialValues={{CPF: '',CNPJ:'', password: ''}}
             onSubmit={(values) => {
               console.log(values);
             }}
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
+                {checked === 'laboratorio' ? (
+                <>                  
                 <MyTextInput
-                  label="Email Address"
-                  icon="mail"
-                  placeholder="your@email.com"
+                  label="CNPJ"
+                  icon="shield"
+                  placeholder="XX.XXX.XXX/0001-XX"
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                  keyboardType="email-address"
+                  onChangeText={handleChange('CNPJ')}
+                  onBlur={handleBlur('CNPJ')}
+                  value={values.CNPJ}
+                  keyboardType="numeric"
                 />
+                <MyTextInput
+                  label="CPF"
+                  icon="shield"
+                  placeholder="XXX.XXX.XXX-XX"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('CPF')}
+                  onBlur={handleBlur('CPF')}
+                  value={values.CPF}
+                  keyboardType="numeric"
+                /></>
+
+                ) : (
+                  <MyTextInput
+                  label="CPF"
+                  icon="shield"
+                  placeholder="XXX.XXX.XXX-XX"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('CPF')}
+                  onBlur={handleBlur('CPF')}
+                  value={values.CPF}
+                  keyboardType="numeric"
+                />
+                )} 
+
 
                 <MyTextInput
                   label="Password"
@@ -95,14 +141,14 @@ const Login = () => {
                   <ButtonText>Login </ButtonText>
                 </StyledButton>
                 <Line/>
-                <StyledButton google={true} onPress={handleSubmit}>
+                {/* <StyledButton google={true} onPress={handleSubmit}>
                   <Fontisto name="google" color="white" size={25} />
                   <ButtonText google={true} >Entrar com Google </ButtonText>
-                </StyledButton>
+                </StyledButton> */}
                 <ExtraView>
-                  <ExtraText>Não possui conta?</ExtraText>
+                  <ExtraText>Esqueceu sua senha?</ExtraText>
                   <TextLink>
-                    <TextLinkContent onPress={ () => navigation.navigate('Cadastro')}>Signup</TextLinkContent>
+                    <TextLinkContent onPress={ () => navigation.navigate('Cadastro')}>Recuperar</TextLinkContent>
                   </TextLink>
                 </ExtraView>
               </StyledFormArea>
@@ -110,6 +156,7 @@ const Login = () => {
           </Formik>
         </InnerContainer>
     </StyledContainer>
+    </ScrollView>
   );
 };
 
