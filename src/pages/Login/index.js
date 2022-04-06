@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
-
-import * as Animatable from 'react-native-animatable'
-import { Touchable } from 'react-native-web';
+import { View, Text, Image, ScrollView } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -20,15 +17,16 @@ import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
 import {
   StyledContainer, 
   InnerContainer, 
-  PageLogo, 
+  Label,
+  LeftIcon,
+  RightIcon,
+  Container,
+  ContainerHeader,
   PageTitle, 
   SubTitle, 
   StyledFormArea, 
-  LeftIcon, 
-  StyledInputLabel, 
-  StyledTextInput, 
-  RightIcon,
   StyledButton, 
+  StyledTextInput,
   ButtonText,
   Colors,
   MsgBox,
@@ -38,10 +36,6 @@ import {
   TextLink,
   TextLinkContent,
 } from '../../../components/styles';
-
-import MyTextInput from '../MyTextInput';
-
-import { ContainerHeader } from './styles';
 
 // colors
 const {brand, darkLight, primary} = Colors;
@@ -59,7 +53,7 @@ const Login = () => {
         <View>
         <ContainerHeader animation="fadeInLeft" delay={500}>
           <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
-          <PageTitle>Medicine Labs</PageTitle>
+          <PageTitle>Tarea</PageTitle>
           <SubTitle>Você é:</SubTitle>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RadioButton
@@ -140,7 +134,7 @@ const Login = () => {
                 />
                 <MsgBox>...</MsgBox>
                 <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Login </ButtonText>
+                  <ButtonText onPress={ () => navigation.navigate('Exames')}>Login </ButtonText>
                 </StyledButton>
                 <Line/>
                 {/* <StyledButton google={true} onPress={handleSubmit}>
@@ -159,6 +153,25 @@ const Login = () => {
         </InnerContainer>
     </StyledContainer>
     </ScrollView>
+  );
+};
+
+const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
+  return (
+    <>
+      <Label>{label}</Label>
+      <Container>
+        <LeftIcon>
+          <Octicons name={icon} size={30} color={brand} />
+        </LeftIcon>
+        <StyledTextInput {...props} />
+        {isPassword && (
+          <RightIcon onPress={() => setHidePassword(!hidePassword)}>
+            <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} height={5} />
+          </RightIcon>
+        ) }
+      </Container>
+    </>
   );
 };
 
