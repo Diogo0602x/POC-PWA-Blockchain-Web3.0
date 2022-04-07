@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 
-import { View, Image, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
+
 
 // formik
 import { Formik } from 'formik';
@@ -39,8 +40,28 @@ const {brand, darkLight, primary} = Colors;
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
 
-const Cadastro = ({navigation}) => {
+// Datetimepicker
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+const Cadastrar = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
+  const [show, setShow] = useState(false);
+  const [date, setDate] = useState(new Date(2022, 0,1)) ;
+  const now = Date.now()
+
+  // Data de nascinemto a ser enviada
+  const [dab, setDab] = useState();
+
+  const onChange = (event,selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(false);
+    setDate(currentDate);
+    setDab(currentDate);
+  }
+
+  const showDatePicker = () => {
+    setShow(true);
+  }
 
   return (
     <KeyboardAvoidingWrapper>
@@ -48,20 +69,42 @@ const Cadastro = ({navigation}) => {
         <StatusBar style="dark"/>
         <InnerContainer>
           <View>
-          <ContainerHeader animation="fadeInLeft" delay={500}>
+          <ContainerHeader animation="fadeInLeft" delay={500} >
             <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
             <PageTitle>Tarea</PageTitle>
             <SubTitle>Digite suas informações</SubTitle>
+
+            {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode= 'date'
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+              maximumDate={new Date(now)}
+              minimumDate={new Date(1910, 0, 1)}
+            />
+          )}
           </ContainerHeader>
           </View>
           <Formik
-            initialValues={{CPF: '',CNPJ:'', password: '', passwordConfirm: ''}}
+            initialValues={{fullName: '',CPF: '',email:'',dateOfBirth: '', password: '', confirmPassowrd: ''}}
             onSubmit={(values) => {
               console.log(values);
             }}
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
+                <MyTextInput
+                  label="Nome Completo"
+                  icon="person"
+                  placeholder="Seu nome completo"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('fullName')}
+                  onBlur={handleBlur('fullName')}
+                  value={values.fullName}
+                />
                 <MyTextInput
                   label="CPF"
                   icon="shield"
@@ -72,9 +115,31 @@ const Cadastro = ({navigation}) => {
                   value={values.CPF}
                   keyboardType="numeric"
                 />
+                <MyTextInput
+                  label="Data de Nascimento"
+                  icon="calendar"
+                  placeholder="YYYY - MM - DD"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange ('dateOfBirth')}
+                  onBlur={handleBlur('dateOfBirth')}
+                  value={dab ? dab.toDateString() : ''}
+                  isDate={true}
+                  editable={false}
+                  showDatePicker={showDatePicker}
+                />
+                <MyTextInput
+                  label="Email"
+                  icon="mail"
+                  placeholder="seu@email.com"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType="email-address"
+                />
 
                 <MyTextInput
-                  label="Digite sua nova senha"
+                  label="Digite sua senha"
                   icon="lock"
                   placeholder="* * * * * * * * *"
                   placeholderTextColor={darkLight}
@@ -91,9 +156,9 @@ const Cadastro = ({navigation}) => {
                   icon="lock"
                   placeholder="* * * * * * * * *"
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('passwordConfirm')}
-                  onBlur={handleBlur('passwordConfirm')}
-                  value={values.passwordConfirm}
+                  onChangeText={handleChange('confirmPassowrd')}
+                  onBlur={handleBlur('confirmPassowrd')}
+                  value={values.confirmPassowrd}
                   secureTextEntry={hidePassword}
                   isPassword={true}
                   hidePassword={hidePassword}
@@ -101,13 +166,12 @@ const Cadastro = ({navigation}) => {
                 />
                 <MsgBox>...</MsgBox>
                 <StyledButton onPress={handleSubmit}>
-                  <ButtonText onPress={ () => navigation.navigate('Login')}>Recuperar</ButtonText>
+                  <ButtonText onPress={ () => navigation.navigate('Login')}>Cadastrar</ButtonText>
                 </StyledButton>
-                <Line/>
                 <ExtraView>
-                  <ExtraText>Já possui conta?</ExtraText>
-                  <TextLink onPress={ () => navigation.navigate('Login')}>
-                    <TextLinkContent>Login</TextLinkContent>
+                  <ExtraText>Já possui uma conta ?</ExtraText>
+                  <TextLink>
+                    <TextLinkContent onPress={ () => navigation.navigate('Login')}>Login</TextLinkContent>
                   </TextLink>
                 </ExtraView>
               </StyledFormArea>
@@ -119,8 +183,7 @@ const Cadastro = ({navigation}) => {
   );
 };
 
-
-const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
+const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, isDate, showDatePicker,...props}) => {
   return (
     <>
       <Label>{label}</Label>
@@ -128,7 +191,12 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
         <LeftIcon>
           <Octicons name={icon} size={30} color={brand} />
         </LeftIcon>
-        <StyledTextInput {...props} />
+        {!isDate && <StyledTextInput {...props} /> }
+        {isDate && (
+          <TouchableOpacity onPress={showDatePicker}>
+            <StyledTextInput {...props} />
+          </TouchableOpacity>
+        )}
         {isPassword && (
           <RightIcon onPress={() => setHidePassword(!hidePassword)}>
             <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} height={5} />
@@ -139,4 +207,4 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
   );
 };
 
-export default Cadastro;
+export default Cadastrar;

@@ -1,39 +1,47 @@
-import React, {useState} from 'react';
-
-import { View, ScrollView } from 'react-native';
+import React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 
-import { useNavigation } from '@react-navigation/native'
-
 import {
-  StyledContainer, 
   InnerContainer, 
-  ContainerHeader,
   PageTitle, 
   SubTitle, 
-  Colors,
+  StyledFormArea, 
+  StyledButton, 
+  ButtonText,
+  Line,
 } from '../../../components/styles';
 
-// colors
-const {brand, darkLight, primary} = Colors;
+import {
+  WelcomeContainer,
+  Avatar,
+  WelcomeImage
+} from './styles';
 
-const Exames = () => {
+// keyboard avoiding view
+import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
+
+const Exames = ({navigation}) => {
 
   return (
-    <ScrollView>
-    <StyledContainer>
-      <StatusBar style="dark"/>
+    <>
+      <StatusBar style="light"/>
       <InnerContainer>
-        <View>
-        <ContainerHeader animation="fadeInLeft" delay={500}>
-          <PageTitle>Tarea</PageTitle>
-          <SubTitle>Digite suas informações</SubTitle>
-        </ContainerHeader>
-        </View>
-        </InnerContainer>
-    </StyledContainer>
-    </ScrollView>
+        <WelcomeImage resizeMode="cover" source={require('../../../assets/img.jpg')} />
+        <WelcomeContainer>
+          <PageTitle welcome={true}>Seja bem vindo(a) </PageTitle>
+          <SubTitle welcome={true}>Pessoa</SubTitle>
+          <SubTitle welcome={true}>seu@email.com</SubTitle>
+          <StyledFormArea>
+            <Avatar resizeMode="cover" source={require('../../../assets/logo.png')} />
+            <Line/>
+            <StyledButton  onPress={ () => navigation.navigate('TelaInicial')}>
+              <ButtonText>Logout</ButtonText>
+            </StyledButton>
+          </StyledFormArea>
+        </WelcomeContainer>
+      </InnerContainer>
+    </>
   );
 };
 
