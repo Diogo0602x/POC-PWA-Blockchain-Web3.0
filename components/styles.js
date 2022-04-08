@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable'
 import Constants from 'expo-constants';
+import { View, Text, Image, ScrollView } from 'react-native';
 
 const StatusBarHeight = Constants.statusBarHeight;
 // colors
@@ -18,7 +19,7 @@ const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
 export const StyledContainer = styled.View`
   flex: 1;
   padding: 25px;
-  padding-top: ${StatusBarHeight + 10}px;
+  padding-top: ${StatusBarHeight + 30}px;
   background-color: ${primary};
 `;
 
@@ -39,6 +40,10 @@ export const PageTitle = styled.Text`
   font-weight: bold;
   color: ${brand};
   padding: 10px;
+
+  ${(props) => props.welcome &&`
+    font-size: 35px;
+  `}
 `;
 
 export const SubTitle = styled.Text`
@@ -49,6 +54,11 @@ export const SubTitle = styled.Text`
   color: ${tertiary};
   text-align: center;
   width: 250px;
+
+  ${(props) => props.welcome &&`
+  margin-bottom: 5px;
+  font-weight: normal;
+  `}
 `;
 
 export const StyledFormArea = styled.View`
@@ -123,6 +133,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
   text-align: center;
   font-size: 13px;
+  color: ${props => props.type == 'SUCESS' ? green : red};
 `;
 
 export const Line = styled.View`
@@ -137,6 +148,7 @@ export const ExtraView = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 10px;
+  flex-wrap: wrap;
 `;
 
 export const ExtraText = styled.Text`

@@ -1,37 +1,45 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react';
+
+import { Colors } from '../../components/styles';
+const {primary, tertiary, brand} = Colors;
+
+// React navigation
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import TelaInicial from '../pages/TelaInicial';
 import Login from '../pages/Login';
 import Cadastro from '../pages/Cadastro';
 import Exames from '../pages/Exames';
+import Cadastrar from '../pages/Cadastrar';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
-export default function Routes(){
+const Routes = () => {
   return(
-    <Stack.Navigator>
-      <Stack.Screen
-        name="TelaInicial"
-        component={TelaInicial}
-        options={{ headerShown: false}}
-      />
-
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{ headerShown: false}}
-      />
-
-      <Stack.Screen
-        name="Cadastro"
-        component={Cadastro}
-        options={{ headerShown: false}}
-      />  
-      <Stack.Screen
-        name="Exames"
-        component={Exames}
-        options={{ headerShown: false}}
-      />  
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'transparent'
+          },
+          headerTintColor: tertiary,
+          headerTransparent: true,
+          headerTitle: '',
+          headerLeftContainerStyle: {
+            paddingLeft: 20
+          }
+        }}
+        initialRouteName="TelaInicial"
+      >
+        <Stack.Screen name="TelaInicial" component={TelaInicial} options={{ headerShown: false}} />
+        <Stack.Screen name="Login" component={Login}  options={{ headerTintColor: brand}} />
+        <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerTintColor: brand}} />  
+        <Stack.Screen name="Exames" component={Exames}  options={{headerTintColor: primary}}  />  
+        <Stack.Screen name="Cadastrar" component={Cadastrar} options={{ headerTintColor: brand}}  />  
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
+
+export default Routes;

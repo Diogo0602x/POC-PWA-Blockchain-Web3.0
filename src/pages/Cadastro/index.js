@@ -4,8 +4,6 @@ import { View, Image, ScrollView } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
-import { useNavigation } from '@react-navigation/native'
-
 // formik
 import { Formik } from 'formik';
 
@@ -38,24 +36,24 @@ import {
 // colors
 const {brand, darkLight, primary} = Colors;
 
-const Cadastro = () => {
+// keyboard avoiding view
+import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
+
+const Cadastro = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
-  const [checked, setChecked] = useState('laboratorio')
-  const navigation = useNavigation();
 
   return (
-    <ScrollView>
-    <StyledContainer>
-      <StatusBar style="dark"/>
-      <InnerContainer>
-        <View>
-        <ContainerHeader animation="fadeInLeft" delay={500}>
-          <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
-          <PageTitle>Tarea</PageTitle>
-          <SubTitle>Digite suas informações</SubTitle>
-        </ContainerHeader>
-        </View>
-
+    <KeyboardAvoidingWrapper>
+      <StyledContainer>
+        <StatusBar style="dark"/>
+        <InnerContainer>
+          <View>
+          <ContainerHeader animation="fadeInLeft" delay={500}>
+            <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
+            <PageTitle>Tarea</PageTitle>
+            <SubTitle>Digite suas informações</SubTitle>
+          </ContainerHeader>
+          </View>
           <Formik
             initialValues={{CPF: '',CNPJ:'', password: '', passwordConfirm: ''}}
             onSubmit={(values) => {
@@ -73,6 +71,7 @@ const Cadastro = () => {
                   onBlur={handleBlur('CPF')}
                   value={values.CPF}
                   keyboardType="numeric"
+                  maxlength="11"
                 />
 
                 <MyTextInput
@@ -108,16 +107,16 @@ const Cadastro = () => {
                 <Line/>
                 <ExtraView>
                   <ExtraText>Já possui conta?</ExtraText>
-                  <TextLink>
-                    <TextLinkContent onPress={ () => navigation.navigate('Login')}>Login</TextLinkContent>
+                  <TextLink onPress={ () => navigation.navigate('Login')}>
+                    <TextLinkContent>Login</TextLinkContent>
                   </TextLink>
                 </ExtraView>
               </StyledFormArea>
             )}
           </Formik>
         </InnerContainer>
-    </StyledContainer>
-    </ScrollView>
+      </StyledContainer>
+    </KeyboardAvoidingWrapper>
   );
 };
 

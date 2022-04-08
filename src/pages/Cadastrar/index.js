@@ -4,15 +4,12 @@ import { View, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
-import { useNavigation } from '@react-navigation/native'
-
-import { RadioButton} from 'react-native-paper'
 
 // formik
 import { Formik } from 'formik';
 
 // icons
-import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
+import {Octicons, Ionicons} from '@expo/vector-icons';
 
 import {
   StyledContainer, 
@@ -40,13 +37,17 @@ import {
 // colors
 const {brand, darkLight, primary} = Colors;
 
+// keyboard avoiding view
+import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
+
 // Datetimepicker
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const AtualizarCadastro = () => {
+const Cadastrar = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [show, setShow] = useState(false);
-  const [date, setDate] = useState(new Date(2000, 0,1));
+  const [date, setDate] = useState(new Date(2022, 0,1)) ;
+  const now = Date.now()
 
   // Data de nascinemto a ser enviada
   const [dab, setDab] = useState();
@@ -62,32 +63,31 @@ const AtualizarCadastro = () => {
     setShow(true);
   }
 
-  const navigation = useNavigation();
-
   return (
-    <ScrollView>
-    <StyledContainer>
-      <StatusBar style="dark"/>
-      <InnerContainer>
-        <View>
-        <ContainerHeader animation="fadeInLeft" delay={500} >
-          <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
-          <PageTitle>Tarea</PageTitle>
-          <SubTitle>Digite suas informações</SubTitle>
+    <KeyboardAvoidingWrapper>
+      <StyledContainer>
+        <StatusBar style="dark"/>
+        <InnerContainer>
+          <View>
+          <ContainerHeader animation="fadeInLeft" delay={500} >
+            <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
+            <PageTitle>Tarea</PageTitle>
+            <SubTitle>Digite suas informações</SubTitle>
 
-          {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode= 'date'
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
-        </ContainerHeader>
-        </View>
-
+            {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode= 'date'
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+              maximumDate={new Date(now)}
+              minimumDate={new Date(1910, 0, 1)}
+            />
+          )}
+          </ContainerHeader>
+          </View>
           <Formik
             initialValues={{fullName: '',CPF: '',email:'',dateOfBirth: '', password: '', confirmPassowrd: ''}}
             onSubmit={(values) => {
@@ -115,7 +115,7 @@ const AtualizarCadastro = () => {
                   value={values.CPF}
                   keyboardType="numeric"
                 />
-                 <MyTextInput
+                <MyTextInput
                   label="Data de Nascimento"
                   icon="calendar"
                   placeholder="YYYY - MM - DD"
@@ -166,7 +166,7 @@ const AtualizarCadastro = () => {
                 />
                 <MsgBox>...</MsgBox>
                 <StyledButton onPress={handleSubmit}>
-                  <ButtonText onPress={ () => navigation.navigate('Login')}>Atualizar</ButtonText>
+                  <ButtonText onPress={ () => navigation.navigate('Login')}>Cadastrar</ButtonText>
                 </StyledButton>
                 <ExtraView>
                   <ExtraText>Já possui uma conta ?</ExtraText>
@@ -178,8 +178,8 @@ const AtualizarCadastro = () => {
             )}
           </Formik>
         </InnerContainer>
-    </StyledContainer>
-    </ScrollView>
+      </StyledContainer>
+    </KeyboardAvoidingWrapper>
   );
 };
 
@@ -207,4 +207,4 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, i
   );
 };
 
-export default AtualizarCadastro;
+export default Cadastrar;
