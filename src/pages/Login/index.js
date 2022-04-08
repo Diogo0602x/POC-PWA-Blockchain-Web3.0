@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 
+<<<<<<< HEAD
 import { View, Text, Image, ActivityIndicator } from 'react-native';
+=======
+import { View, Text, Image } from 'react-native';
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -44,6 +48,7 @@ const {brand, darkLight, primary} = Colors;
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
 
+<<<<<<< HEAD
 // API client
 import axios from 'axios';
 
@@ -80,6 +85,11 @@ const Login = ({navigation}) => {
     setMessage(message);
     setMessageType(type);
   }
+=======
+const Login = ({navigation}) => {
+  const [hidePassword, setHidePassword] = useState(true);
+  const [checked, setChecked] = useState('laboratorio')
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
 
   return (
     <KeyboardAvoidingWrapper>
@@ -110,6 +120,7 @@ const Login = ({navigation}) => {
           </ContainerHeader>
           </View>
             <Formik
+<<<<<<< HEAD
               initialValues={{CPF: '', password: ''}}
               // initialValues={{CPF: '',CNPJ:'', password: ''}}
               onSubmit={(values, {setSubmitting}) => {
@@ -122,6 +133,15 @@ const Login = ({navigation}) => {
               }}
             >
               {({ handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
+=======
+              initialValues={{CPF: '',CNPJ:'', password: ''}}
+              onSubmit={(values) => {
+                console.log(values);
+                navigation.navigate("Exames")
+              }}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                 <StyledFormArea>
                   {checked === 'paciente' ? (
                   <>                  
@@ -134,7 +154,10 @@ const Login = ({navigation}) => {
                     onBlur={handleBlur('CNPJ')}
                     value={values.CNPJ}
                     keyboardType="numeric"
+<<<<<<< HEAD
                     maxlength="14"
+=======
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   />
                   <MyTextInput
                     label="CPF"
@@ -145,7 +168,10 @@ const Login = ({navigation}) => {
                     onBlur={handleBlur('CPF')}
                     value={values.CPF}
                     keyboardType="numeric"
+<<<<<<< HEAD
                     maxlength="11"
+=======
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   /></>
 
                   ) : (
@@ -158,7 +184,10 @@ const Login = ({navigation}) => {
                     onBlur={handleBlur('CPF')}
                     value={values.CPF}
                     keyboardType="numeric"
+<<<<<<< HEAD
                     maxlength="11"
+=======
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   />
                   )} 
 
@@ -175,6 +204,7 @@ const Login = ({navigation}) => {
                     hidePassword={hidePassword}
                     setHidePassword={setHidePassword}
                   />
+<<<<<<< HEAD
                   <MsgBox type={messageType}>{message}</MsgBox>
                   {!isSubmitting && (
                     <StyledButton onPress={handleSubmit}>
@@ -187,6 +217,12 @@ const Login = ({navigation}) => {
                       <ActivityIndicator size="large" color={primary} />
                     </StyledButton>
                   )}
+=======
+                  <MsgBox>...</MsgBox>
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText onPress={ () => navigation.navigate('Exames')}>Login </ButtonText>
+                  </StyledButton>
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   <Line/>
                   {/* <StyledButton google={true} onPress={handleSubmit}>
                     <Fontisto name="google" color="white" size={25} />
@@ -197,8 +233,11 @@ const Login = ({navigation}) => {
                     <TextLink onPress={() => navigation.navigate('Cadastro')}>
                       <TextLinkContent>Recuperar</TextLinkContent>
                     </TextLink>
+<<<<<<< HEAD
                   </ExtraView>
                   <ExtraView>
+=======
+>>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                     <ExtraText>Não possui conta?</ExtraText>
                     <TextLink onPress={() => navigation.navigate('Cadastrar')}>
                       <TextLinkContent>Cadastrar</TextLinkContent>
