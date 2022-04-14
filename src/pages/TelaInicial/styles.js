@@ -1,20 +1,5 @@
 import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable'
-import Constants from 'expo-constants';
-
-const StatusBarHeight = Constants.statusBarHeight;
-// colors
-export const Colors = {
-  primary: '#ffffff',
-  secondary: '#E5E7EB',
-  tertiary: '#1F2937',
-  darklight: '#9CA3AF',
-  brand: '#38A69D',
-  green: '#10B981',
-  red: '#EF4444',
-};
-
-const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
 
 export const Container = styled.View`
   flex: 1;
@@ -28,19 +13,10 @@ export const ContainerLogo = styled.View`
   align-items: center;
 `;
 
-export const ContainerForm = Animatable.createAnimatableComponent(styled.View`
-  flex: 1;
-  backgroundColor: #38A69D;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  padding-start: 5%;
-  padding-end: 5%;
-`)
-
 export const Title = styled.Text`
   font-size: 22px;
   font-weight: bold;
-  margin-top: 28px
+  margin-top: 28px;
   margin-bottom: 12px;
   color: #FFF;
 `;
@@ -67,3 +43,12 @@ export const Acessar = styled.Text`
   color: #38A69D;
   font-weight: bold;
 `;
+
+export const ContainerForm = Animatable.createAnimatableComponent(styled.View`
+  flex: 1;
+  background-color: #38A69D;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding-start: 5%;
+  padding-end: 5%;
+`)

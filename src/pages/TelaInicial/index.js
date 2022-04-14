@@ -20,7 +20,7 @@ export default function TelaInicial({navigation}) {
         <Animatable.Image
           animation="flipInY"
           source={require('../../../assets/logo.png')}
-          style={{ width: '100%', height: '60%' }}
+          style={{ width: '100%', height: '60%'}}
           resizeMode="contain"
         />
       </ContainerLogo>

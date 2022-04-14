@@ -1,16 +1,12 @@
 import React, {useState} from 'react';
 
-<<<<<<< HEAD
 import { View, Text, Image, ActivityIndicator } from 'react-native';
-=======
-import { View, Text, Image } from 'react-native';
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
 
 import { StatusBar } from 'expo-status-bar';
 
 import { RadioButton} from 'react-native-paper'
 
-// Mas CPF e CNPJ
+// Mask CPF e CNPJ
 // import MaskCpfCnpj from "react-native-mask-cpf-cnpj";
 
 // formik
@@ -48,48 +44,68 @@ const {brand, darkLight, primary} = Colors;
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
 
-<<<<<<< HEAD
 // API client
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
-const Login = ({navigation}) => {
+const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [checked, setChecked] = useState('laboratorio');
   const [message, setMessage] = useState();
   const [messageType, setMessageType] = useState();
+  const navigation = useNavigation();
 
-  const handleLogin = (credentials, setSubmitting) => {
+  const handleLoginPaciente = (credentials, setSubmitting) => {
+    const CPF = credentials.CPF;
     handleMessage(null);
-    const url ='http://localhost:8080/fhir/Patient';
+    const url ='http://lima.tarea.lan:8080/fhir/Patient/' + CPF;    
     axios
-      .post(url, credentials)
+      .get(url)
       .then((response) => {
         const result = response.data;
-        const {message, status, data} = result;
-
-        if (status !== 'SUCCESS') {
-          handleMessage(message, status);
-        } else {
-          navigation.navigate('Exames', {...data[0]});
-        }
+        navigation.navigate('ExamesPaciente', {result});
         setSubmitting(false);
       })
       .catch(error => {
-      console.log(error.JSON());
-      setSubmitting(false);
-      handleMessage("Ocorreu um erro. Verifique sua internet e tente novamente");
+        
+        console.log(error);
+        setSubmitting(false);
+        handleMessage("Verifique os dados e tente novamente!");
     });
   };
 
+  const handleLoginLaboratorio = (credentials, setSubmitting) => {
+    const CNPJ = credentials.CNPJ;
+    handleMessage(null);
+    const url2 ='http://lima.tarea.lan:8080/fhir/Organization/' + CNPJ;
+    axios
+      .get(url2)
+      .then((response) => {
+        const result = response.data;
+        navigation.navigate('ExamesLaboratorio', {result});
+        setSubmitting(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setSubmitting(false);
+        handleMessage("Verifique os dados e tente novamente!");
+    });
+  };
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message);
     setMessageType(type);
   }
-=======
-const Login = ({navigation}) => {
-  const [hidePassword, setHidePassword] = useState(true);
-  const [checked, setChecked] = useState('laboratorio')
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
+
+  let initialValues = {};
+  function verifica() {
+    if (checked === "paciente") {
+      initialValues={CPF: '', password: ''}
+      return initialValues
+    } else if (checked === "laboratorio"){
+      initialValues={CNPJ: '', password: ''}
+      return initialValues
+    }
+  }
 
   return (
     <KeyboardAvoidingWrapper>
@@ -102,48 +118,52 @@ const Login = ({navigation}) => {
             <PageTitle>Tarea</PageTitle>
             <SubTitle>Você é:</SubTitle>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <RadioButton
+            <RadioButton
                 value="paciente"
                 status={checked === 'paciente' ? 'checked' : 'unchacked'}
-                onPress={() => setChecked('paciente')}
-                color="#38A69D"
-              />
-              <Text style={{fontWeight: 'bold', fontSize: 15}}>Laboratorio</Text>
-              <RadioButton
-                value="laboratorio"
-                status={checked === 'laboratorio' ? 'checked' : 'unchacked'}
-                onPress={() => setChecked('laboratorio')}
+                onPress={() => {setChecked('paciente'); verifica()}}
                 color="#38A69D"
               />
               <Text style={{fontWeight: 'bold', fontSize: 15}}>Paciente</Text>
+              <RadioButton
+                value="laboratorio"
+                status={checked === 'laboratorio' ? 'checked' : 'unchacked'}
+                onPress={() => {setChecked('laboratorio'); verifica()}}
+                color="#38A69D"
+              />
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>Laboratório</Text>
             </View>
           </ContainerHeader>
           </View>
             <Formik
-<<<<<<< HEAD
-              initialValues={{CPF: '', password: ''}}
-              // initialValues={{CPF: '',CNPJ:'', password: ''}}
+              // initialValues={{CPF: '', password: 'paciente2022'}}
+              initialValues={ initialValues }
               onSubmit={(values, {setSubmitting}) => {
-                if (values.CPF =="" || values.password == "") {
-                  handleMessage('Por favor preencha todos os campos!');
-                  setSubmitting(false);
-                } else {
-                  handleLogin(values, setSubmitting);
+                switch(checked) {
+                  case 'paciente':
+                    if (values.CPF === "" || values.password === "paciente2022") {
+                        console.log('paciente');
+                       handleMessage('Por favor preencha todos os campos!');
+                       setSubmitting(false);
+                     } else {
+                      handleLoginPaciente(values, setSubmitting);
+                    }
+                    break
+                  case 'laboratorio':
+                    if (values.CNPJ === "" || values.password === "paciente 2022") {
+                       handleMessage('Por favor preencha todos os campos!');
+                       setSubmitting(false);
+                     } else {
+                      handleLoginLaboratorio(values, setSubmitting);
+                    }
+                    break
+                  }
                 }
-              }}
+              }
             >
               {({ handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
-=======
-              initialValues={{CPF: '',CNPJ:'', password: ''}}
-              onSubmit={(values) => {
-                console.log(values);
-                navigation.navigate("Exames")
-              }}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                 <StyledFormArea>
-                  {checked === 'paciente' ? (
+                  {checked === 'laboratorio' ? (
                   <>                  
                   <MyTextInput
                     label="CNPJ"
@@ -154,25 +174,9 @@ const Login = ({navigation}) => {
                     onBlur={handleBlur('CNPJ')}
                     value={values.CNPJ}
                     keyboardType="numeric"
-<<<<<<< HEAD
                     maxlength="14"
-=======
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   />
-                  <MyTextInput
-                    label="CPF"
-                    icon="shield"
-                    placeholder="XXX.XXX.XXX-XX"
-                    placeholderTextColor={darkLight}
-                    onChangeText={handleChange('CPF')}
-                    onBlur={handleBlur('CPF')}
-                    value={values.CPF}
-                    keyboardType="numeric"
-<<<<<<< HEAD
-                    maxlength="11"
-=======
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
-                  /></>
+                  </>
 
                   ) : (
                     <MyTextInput
@@ -184,10 +188,7 @@ const Login = ({navigation}) => {
                     onBlur={handleBlur('CPF')}
                     value={values.CPF}
                     keyboardType="numeric"
-<<<<<<< HEAD
                     maxlength="11"
-=======
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   />
                   )} 
 
@@ -204,7 +205,6 @@ const Login = ({navigation}) => {
                     hidePassword={hidePassword}
                     setHidePassword={setHidePassword}
                   />
-<<<<<<< HEAD
                   <MsgBox type={messageType}>{message}</MsgBox>
                   {!isSubmitting && (
                     <StyledButton onPress={handleSubmit}>
@@ -217,12 +217,6 @@ const Login = ({navigation}) => {
                       <ActivityIndicator size="large" color={primary} />
                     </StyledButton>
                   )}
-=======
-                  <MsgBox>...</MsgBox>
-                  <StyledButton onPress={handleSubmit}>
-                    <ButtonText onPress={ () => navigation.navigate('Exames')}>Login </ButtonText>
-                  </StyledButton>
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                   <Line/>
                   {/* <StyledButton google={true} onPress={handleSubmit}>
                     <Fontisto name="google" color="white" size={25} />
@@ -233,11 +227,8 @@ const Login = ({navigation}) => {
                     <TextLink onPress={() => navigation.navigate('Cadastro')}>
                       <TextLinkContent>Recuperar</TextLinkContent>
                     </TextLink>
-<<<<<<< HEAD
                   </ExtraView>
                   <ExtraView>
-=======
->>>>>>> 0e651f4cea8682141c42c1e4855d2c9b52d14400
                     <ExtraText>Não possui conta?</ExtraText>
                     <TextLink onPress={() => navigation.navigate('Cadastrar')}>
                       <TextLinkContent>Cadastrar</TextLinkContent>

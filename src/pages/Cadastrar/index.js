@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 
-import { View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
-
 
 // formik
 import { Formik } from 'formik';
 
 // icons
 import {Octicons, Ionicons} from '@expo/vector-icons';
+
+// api client
+import axios from 'axios';
 
 import {
   StyledContainer, 
@@ -47,6 +49,9 @@ const Cadastrar = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date(2022, 0,1)) ;
+
+  const [message, setMessage] = useState();
+  const [messageType, setMessageType] = useState();
   const now = Date.now()
 
   // Data de nascinemto a ser enviada
@@ -62,6 +67,33 @@ const Cadastrar = ({navigation}) => {
   const showDatePicker = () => {
     setShow(true);
   }
+// form handling
+const handlelSingup = (credentials, setSubmitting) => {
+ handleMessage (null);
+  const url = 'http://lima.tarea.lan:8080/fhir/Patient/' + CPF;
+  axios
+    .post(url, credentials)
+    .then((response) => {
+      const result = response.data;
+      const { message, status, data } = result;
+
+      if (status !== 'SUCCESS') {
+        handleMessage (message, status);
+       } else {
+        navigation.navigate('ExamesPaciente', {result});
+      }
+      setSubmitting(false);
+    })
+    .catch((error) => {
+      console.log(error.JSON());
+      setSubmitting(false);
+      handleMessage('An error occurred. Check your network and try again');
+    });
+};
+const handleMessage = (message, type = 'FAILED') => {
+  setMessage (message);
+  setMessageType (type);
+};
 
   return (
     <KeyboardAvoidingWrapper>
@@ -73,7 +105,6 @@ const Cadastrar = ({navigation}) => {
             <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
             <PageTitle>Tarea</PageTitle>
             <SubTitle>Digite suas informações</SubTitle>
-
             {show && (
             <DateTimePicker
               testID="dateTimePicker"
@@ -89,21 +120,30 @@ const Cadastrar = ({navigation}) => {
           </ContainerHeader>
           </View>
           <Formik
-            initialValues={{fullName: '',CPF: '',email:'',dateOfBirth: '', password: '', confirmPassowrd: ''}}
-            onSubmit={(values) => {
-              console.log(values);
+            initialValues={{name: '',CPF: '',email:'',dateOfBirth: '', password: '', confirmPassowrd: ''}}
+            onSubmit={(values, setSubmitting) => {
+              values = {...values, dateOfBirth: dab}
+              if (values.name === ''|| values.CPF === ''|| values.dateOfBirth === ''|| values.email === '' || values.password === '' || values.confirmPassowrd === '') {
+                  handleMessage('Por favor preencha todos os campos!');
+                  setSubmitting(false);
+                } else if(values.password !== values.confirmPassowrd) {
+                  handleMessage ('Senhas não são iguais!');
+                  setSubmitting(false);
+                } else {
+                  handlelSingup(values, setSubmitting);
+              }
             }}
           >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
+            {({ handleChange, handleBlur, handleSubmit, values, isSubmitting }) => (
               <StyledFormArea>
                 <MyTextInput
                   label="Nome Completo"
                   icon="person"
                   placeholder="Seu nome completo"
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
-                  value={values.fullName}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
                 />
                 <MyTextInput
                   label="CPF"
@@ -164,10 +204,18 @@ const Cadastrar = ({navigation}) => {
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
                 />
-                <MsgBox>...</MsgBox>
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText onPress={ () => navigation.navigate('Login')}>Cadastrar</ButtonText>
-                </StyledButton>
+                <MsgBox type={messageType}>{message}</MsgBox>
+                {!isSubmitting && (
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText>Cadastrar</ButtonText>
+                  </StyledButton>
+                )}
+
+                {isSubmitting && (
+                  <StyledButton disabled={true}>
+                    <ActivityIndicator size="large" color={primary} />
+                  </StyledButton>
+                )}
                 <ExtraView>
                   <ExtraText>Já possui uma conta ?</ExtraText>
                   <TextLink>
