@@ -11,7 +11,7 @@ import TelaInicial from '../pages/TelaInicial';
 import Login from '../pages/Login';
 import Cadastro from '../pages/Cadastro';
 import ExamesPaciente from '../pages/ExamesPaciente';
-import ExamesLaboratorio from '../pages/ExamesPaciente';
+import ExamesLaboratorio from '../pages/ExamesLaboratorio';
 
 import Cadastrar from '../pages/Cadastrar';
 

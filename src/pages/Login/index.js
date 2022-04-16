@@ -142,7 +142,6 @@ const Login = () => {
                 switch(checked) {
                   case 'paciente':
                     if (values.CPF === "" || values.password === "paciente2022") {
-                        console.log('paciente');
                        handleMessage('Por favor preencha todos os campos!');
                        setSubmitting(false);
                      } else {
@@ -154,6 +153,7 @@ const Login = () => {
                        handleMessage('Por favor preencha todos os campos!');
                        setSubmitting(false);
                      } else {
+                      console.log('--- laboratorio');
                       handleLoginLaboratorio(values, setSubmitting);
                     }
                     break
@@ -177,7 +177,6 @@ const Login = () => {
                     maxlength="14"
                   />
                   </>
-
                   ) : (
                     <MyTextInput
                     label="CPF"
