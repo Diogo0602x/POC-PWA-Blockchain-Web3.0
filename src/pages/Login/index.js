@@ -4,10 +4,9 @@ import { View, Text, Image, ActivityIndicator } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
-import { RadioButton} from 'react-native-paper'
+import { RadioButton} from 'react-native-paper';
 
-// Mask CPF e CNPJ
-// import MaskCpfCnpj from "react-native-mask-cpf-cnpj";
+import {cnpjMask, cpfMask} from './Maskedinput';
 
 // formik
 import { Formik } from 'formik';
@@ -172,12 +171,11 @@ const Login = () => {
                     placeholderTextColor={darkLight}
                     onChangeText={handleChange('CNPJ')}
                     onBlur={handleBlur('CNPJ')}
-                    value={values.CNPJ}
+                    value={cnpjMask(values.CNPJ)}
                     keyboardType="numeric"
                     maxlength="14"
                   />
                   </>
-
                   ) : (
                     <MyTextInput
                     label="CPF"
@@ -186,12 +184,11 @@ const Login = () => {
                     placeholderTextColor={darkLight}
                     onChangeText={handleChange('CPF')}
                     onBlur={handleBlur('CPF')}
-                    value={values.CPF}
+                    value={cpfMask(values.CPF)}
                     keyboardType="numeric"
                     maxlength="11"
                   />
                   )} 
-
                   <MyTextInput
                     label="Password"
                     icon="lock"
@@ -211,17 +208,12 @@ const Login = () => {
                       <ButtonText>Login</ButtonText>
                     </StyledButton>
                   )}
-
                   {isSubmitting && (
                     <StyledButton disabled={true}>
                       <ActivityIndicator size="large" color={primary} />
                     </StyledButton>
                   )}
                   <Line/>
-                  {/* <StyledButton google={true} onPress={handleSubmit}>
-                    <Fontisto name="google" color="white" size={25} />
-                    <ButtonText google={true} >Entrar com Google </ButtonText>
-                  </StyledButton> */}
                   <ExtraView>
                     <ExtraText>Esqueceu sua senha?</ExtraText>
                     <TextLink onPress={() => navigation.navigate('Cadastro')}>

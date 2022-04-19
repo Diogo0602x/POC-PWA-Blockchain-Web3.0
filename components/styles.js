@@ -43,6 +43,7 @@ export const PageTitle = styled.Text`
 
   ${(props) => props.welcome &&`
     font-size: 35px;
+    width: 100%;
   `}
 `;
 
@@ -73,16 +74,16 @@ export const RadioView = styled.View`
 `;
 
 export const StyledTextInput = styled.TextInput`
-  background-color: ${secondary};
-  padding: 15px;
-  padding-left: 55px;
-  padding-right: 55px;
-  border-radius: 5px;
-  font-size: 16px;
-  height: 60px;
-  margin-vertical: 3px;
-  margin-bottom: 10px;
-  color: ${tertiary};
+background-color: ${secondary};
+padding: 15px;
+padding-left: 43px;
+border-radius: 5px;
+font-size: 16px;
+width: 105%;
+height: 60px;
+margin-vertical: 3px;
+margin-bottom: 10px;
+color: ${tertiary};
 `;
 
 export const StylexInputLable = styled.Text`
