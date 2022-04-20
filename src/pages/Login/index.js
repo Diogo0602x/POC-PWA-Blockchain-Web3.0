@@ -56,8 +56,9 @@ const Login = () => {
 
   const handleLoginPaciente = (credentials, setSubmitting) => {
     const CPF = credentials.CPF;
+    const cpfLimpo = CPF.replace(/[\.\-]/g, '');
     handleMessage(null);
-    const url ='http://lima.tarea.lan:8080/fhir/Patient/' + CPF;    
+    const url ='http://lima.tarea.lan:8080/fhir/Patient/' + cpfLimpo;    
     axios
       .get(url)
       .then((response) => {
@@ -66,17 +67,19 @@ const Login = () => {
         setSubmitting(false);
       })
       .catch(error => {
-        
         console.log(error);
         setSubmitting(false);
         handleMessage("Verifique os dados e tente novamente!");
     });
   };
 
+  const senhaPadrao = "paciente2022"
+
   const handleLoginLaboratorio = (credentials, setSubmitting) => {
     const CNPJ = credentials.CNPJ;
+    const cnpjLimpo = CNPJ.replace(/[\.\/\-]/g, '');
     handleMessage(null);
-    const url2 ='http://lima.tarea.lan:8080/fhir/Organization/' + CNPJ;
+    const url2 ='http://lima.tarea.lan:8080/fhir/Organization/' + cnpjLimpo;
     axios
       .get(url2)
       .then((response) => {
@@ -135,25 +138,33 @@ const Login = () => {
           </ContainerHeader>
           </View>
             <Formik
-              // initialValues={{CPF: '', password: 'paciente2022'}}
               initialValues={ initialValues }
               onSubmit={(values, {setSubmitting}) => {
                 switch(checked) {
                   case 'paciente':
-                    if (values.CPF === "" || values.password === "paciente2022") {
+                    if (values.CPF === "" || values.password === "") {
                        handleMessage('Por favor preencha todos os campos!');
                        setSubmitting(false);
                      } else {
-                      handleLoginPaciente(values, setSubmitting);
-                    }
+                      if (values.password === senhaPadrao){
+                        handleLoginPaciente(values, setSubmitting);
+                      }
+                      else {
+                        alert('Senha incorreta!');
+                      }
+                   }
                     break
                   case 'laboratorio':
-                    if (values.CNPJ === "" || values.password === "paciente 2022") {
+                    if (values.CNPJ === "" || values.password === "") {
                        handleMessage('Por favor preencha todos os campos!');
                        setSubmitting(false);
                      } else {
-                      console.log('--- laboratorio');
-                      handleLoginLaboratorio(values, setSubmitting);
+                       if (values.password === senhaPadrao){
+                         handleLoginLaboratorio(values, setSubmitting);
+                       }
+                       else {
+                         alert('Senha incorreta!');
+                       }
                     }
                     break
                   }
@@ -167,7 +178,7 @@ const Login = () => {
                   <MyTextInput
                     label="CNPJ"
                     icon="shield"
-                    placeholder="XX.XXX.XXX/0001-XX"
+                    placeholder="XX.XXX.XXX/XXXX-XX"
                     placeholderTextColor={darkLight}
                     onChangeText={handleChange('CNPJ')}
                     onBlur={handleBlur('CNPJ')}
