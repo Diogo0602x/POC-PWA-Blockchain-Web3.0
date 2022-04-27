@@ -9,12 +9,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import TelaInicial from '../pages/TelaInicial';
 import Login from '../pages/Login';
-import Cadastro from '../pages/Cadastro';
+import Cadastrar from '../pages/Cadastrar';
 import ExamesPaciente from '../pages/ExamesPaciente';
 import ExamesLaboratorio from '../pages/ExamesLaboratorio';
-
-import Cadastrar from '../pages/Cadastrar';
-
+import RestaurarSenha from '../pages/RestaurarSenha';
+import RoutesExamePaciente from '../pages/ExamesPaciente/RoutesExamePaciente';
+import RoutesExameLaboratorio from '../pages/ExamesLaboratorio/RoutesExameLaboratorio';
 
 const Stack = createStackNavigator();
 
@@ -37,10 +37,12 @@ const Routes = () => {
       >
         <Stack.Screen name="TelaInicial" component={TelaInicial} options={{ headerShown: false}} />
         <Stack.Screen name="Login" component={Login}  options={{ headerTintColor: brand}} />
-        <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerTintColor: brand}} />  
+        <Stack.Screen name="Cadastrar" component={Cadastrar} options={{ headerTintColor: brand}} />  
         <Stack.Screen name="ExamesPaciente" component={ExamesPaciente}  options={{headerTintColor: primary}}  /> 
         <Stack.Screen name="ExamesLaboratorio" component={ExamesLaboratorio}  options={{headerTintColor: primary}}  /> 
-        <Stack.Screen name="Cadastrar" component={Cadastrar} options={{ headerTintColor: brand}}  />  
+        <Stack.Screen name="RestaurarSenha" component={RestaurarSenha} options={{ headerTintColor: brand}}  />  
+        <Stack.Screen name="RoutesExamePaciente" component={RoutesExamePaciente} options={{ headerTintColor: brand}}  />  
+        <Stack.Screen name="RoutesExameLaboratorio" component={RoutesExameLaboratorio} options={{ headerTintColor: brand}}  />  
 
       </Stack.Navigator>
     </NavigationContainer>

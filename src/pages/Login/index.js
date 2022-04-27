@@ -42,6 +42,9 @@ const {brand, darkLight, primary} = Colors;
 
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
+import RoutesExamePaciente from '../ExamesPaciente'
+import RoutesExameLaboratorio from '../ExamesPaciente';
+
 
 // API client
 import axios from 'axios';
@@ -49,7 +52,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
-  const [checked, setChecked] = useState('laboratorio');
+  const [checked, setChecked] = useState('paciente');
   const [message, setMessage] = useState();
   const [messageType, setMessageType] = useState();
   const navigation = useNavigation();
@@ -63,7 +66,7 @@ const Login = () => {
       .get(url)
       .then((response) => {
         const result = response.data;
-        navigation.navigate('ExamesPaciente', {result});
+        navigation.navigate('RoutesExamePaciente', {result});
         setSubmitting(false);
       })
       .catch(error => {
@@ -73,7 +76,7 @@ const Login = () => {
     });
   };
 
-  const senhaPadrao = "paciente2022"
+  const senhaPadrao = "a"
 
   const handleLoginLaboratorio = (credentials, setSubmitting) => {
     const CNPJ = credentials.CNPJ;
@@ -84,7 +87,7 @@ const Login = () => {
       .get(url2)
       .then((response) => {
         const result = response.data;
-        navigation.navigate('ExamesLaboratorio', {result});
+        navigation.navigate('RoutesExameLaboratorio', {result});
         setSubmitting(false);
       })
       .catch(error => {
@@ -227,7 +230,7 @@ const Login = () => {
                   <Line/>
                   <ExtraView>
                     <ExtraText>Esqueceu sua senha?</ExtraText>
-                    <TextLink onPress={() => navigation.navigate('Cadastro')}>
+                    <TextLink onPress={() => navigation.navigate('RestaurarSenha')}>
                       <TextLinkContent>Recuperar</TextLinkContent>
                     </TextLink>
                   </ExtraView>

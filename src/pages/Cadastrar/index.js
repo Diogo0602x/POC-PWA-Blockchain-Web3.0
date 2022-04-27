@@ -112,6 +112,7 @@ const handleMessage = (message, type = 'FAILED') => {
               mode= 'date'
               is24Hour={true}
               display="default"
+              placeholderTextColor={darkLight}
               onChange={onChange}
               maximumDate={new Date(now)}
               minimumDate={new Date(1910, 0, 1)}
