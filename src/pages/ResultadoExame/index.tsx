@@ -4,6 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 
 import {cnpjMask, cpfMask} from '../../pages/Login/Maskedinput';
 
+import { format, formatDistance, formatRelative, parseISO, subDays } from 'date-fns'
+
 import {
   PageTitleExame, 
   SubTitleExame, 
@@ -22,15 +24,13 @@ import {
 
 const ResultadoExame = ({route}) => {
   const exames = route.params;
-  const code = exames.resource.code.coding[0].code;
+  const code = exames.resource.code.coding[0].display;
   const dataExame = new Date(exames.resource.effectiveDateTime);
-  const data = dataExame.toLocaleDateString()
+  const dataFormated = format(new Date(dataExame), 'dd/MM/yyyy')
   const resultado = exames.resource.valueString;
   const laboratorio = exames.resource.performer[0].reference;
   const organization = laboratorio.replace("Organization/", '');
   const paciente = exames.resource.subject.reference;
-
-
 
   console.log(route.params)
     return (
@@ -40,21 +40,16 @@ const ResultadoExame = ({route}) => {
           <WelcomeContainer>     
             <StyledFormArea>
               <PageTitleExame welcome={true}>RESULTADO DE EXAMES</PageTitleExame>
-              <SubTitleExame welcome={true}>{data || 'Data Realizada'}</SubTitleExame>
+              <SubTitleExame welcome={true}>{dataFormated || 'Data Realizada'}</SubTitleExame>
             </StyledFormArea>
             <Line/>
             <StyledFormAreaExames>
+            <CardContainer>
+                <TitleExame>Teste Rápido Covid 19</TitleExame>
+              </CardContainer>
               <CardContainer>
                 <TitleExame>Exame</TitleExame>
                 <TextExame>{code || 'Código'}</TextExame>
-              </CardContainer>
-              <CardContainer>
-                <TitleExame>Tipo</TitleExame>
-                <TextExame>Teste Rápido Covid 19</TextExame>
-              </CardContainer>
-              <CardContainer>
-                <TitleExame>Paciente</TitleExame>
-                <TextExame>{cpfMask(paciente) || 'Paciente'}</TextExame>
               </CardContainer>
                 <TitleExame>Laboratório</TitleExame>
                 <TextExame>{cnpjMask(organization) || 'Laboratório'}</TextExame>

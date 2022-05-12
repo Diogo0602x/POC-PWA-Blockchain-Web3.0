@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 
-import { View, Text, Image, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, Image, ActivityIndicator, Alert, Platform } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -9,7 +9,7 @@ import { RadioButton} from 'react-native-paper';
 import {cnpjMask, cpfMask} from './Maskedinput';
 
 // formik
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 
 // icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
@@ -40,6 +40,7 @@ import {
 // Colors
 const {brand, darkLight, primary} = Colors;
 
+
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
 
@@ -57,7 +58,6 @@ const Login = () => {
   const [pacient, setPacient] = useState({});
   const [organization, setOrganization] = useState({});
   const [exames, setExames] = useState({});
-
 
   const handleSubmit = useCallback((setSubmitting, url, url2) => {
     axios
@@ -240,21 +240,23 @@ const Login = () => {
                     onBlur={handleBlur('CNPJ')}
                     value={cnpjMask(values.CNPJ)}
                     keyboardType="numeric"
-                    maxlength="14"
+                    maxlength="14"                                       
                   />
                   </>
                   ) : (
-                    <MyTextInput
-                    label="CPF"
-                    icon="shield"
-                    placeholder="XXX.XXX.XXX-XX"
-                    placeholderTextColor={darkLight}
-                    onChangeText={handleChange('CPF')}
-                    onBlur={handleBlur('CPF')}
-                    value={cpfMask(values.CPF)}
-                    keyboardType="numeric"
-                    maxlength="11"
-                  />
+                    <>
+                      <MyTextInput
+                      label="CPF"
+                      icon="shield"
+                      placeholder="XXX.XXX.XXX-XX"
+                      placeholderTextColor={darkLight}
+                      onChangeText={handleChange('CPF')}
+                      onBlur={handleBlur('CPF')}
+                      value={cpfMask(values.CPF)}
+                      keyboardType="numeric"
+                      maxlength="11"
+                    />
+                  </>
                   )} 
                   <MyTextInput
                     label="Password"
@@ -310,7 +312,7 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
         <LeftIcon>
           <Octicons name={icon} size={30} color={brand} />
         </LeftIcon>
-        <StyledTextInput {...props} />
+        <StyledTextInput {...props}/>
         {isPassword && (
           <RightIcon onPress={() => setHidePassword(!hidePassword)}>
             <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} height={5} />

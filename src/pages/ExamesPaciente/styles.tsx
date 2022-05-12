@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
 import {Colors, InnerContainer} from '../../../components/styles';
-import DropShadow from "react-native-drop-shadow";
+import { Dimensions } from 'react-native';
 
 const {brand, darkLight, primary,tertiary, secondary} = Colors;
-// const deviceWidth = Math.round(Dimensions.get('window').width);
+const width = Dimensions.get("screen").width;
 
 export const WelcomeContainer = styled.View`
   flex: 1;
@@ -35,15 +35,16 @@ export const WelcomeImage = styled.Image`
 `;
 
 export const PageTitleExame = styled.Text`
-  font-size: 16px;
-  text-align: left;
+  font-size: 16.5px;
   font-weight: bold;
   color: ${brand};
   padding-bottom: 5px;
+  text-align: center;
 
   ${(props) => props.welcome &&`
     font-size: 20px;
     width: 100%;
+    text-align: left;
   `}
 `;
 
@@ -73,9 +74,9 @@ export const LineCard = styled.View`
 export const CardContainer = styled.TouchableOpacity`
   width: 92%;
   border-radius: 12px;
-  flex: 1;
-  margin-left: 16px;
+  margin-left: 5%;
   padding-bottom: 20px;
+  margin-top: 1%;
   margin-bottom: 10px;
   background-color: #F8F8FF	;
 `;
@@ -113,12 +114,7 @@ export const CardText = styled.Text`
 export const CardDescricao = styled.Text`
   font-size: 16px;
   color: #000;
-`;
-
-export const ContainerPrincipal = styled.View`
-  flex: 1;
-  background-color: #FFF;
-  padding-top: 10%
+  width: 100%
 `;
 
 export const ContainerExames = styled.TouchableOpacity`
@@ -131,8 +127,17 @@ export const ContainerExames = styled.TouchableOpacity`
 `;
 
 export const ContainerCabecalho = styled.View`
-  margin-top: 14%;
+  margin-top: ${bottonSize()};
   margin-bottom: 8%;
   padding-start: 5%;
   flex-direction: row
+  flex: 1;
+  width: 100%;
 `;
+
+function bottonSize() {
+  if (width < 400) {
+    return "25%";
+  }
+  return "5%";
+}
