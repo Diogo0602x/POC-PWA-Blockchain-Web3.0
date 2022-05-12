@@ -63,7 +63,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const StyledFormArea = styled.View`
-  width: 90%;
+  width: 100%;
 `;
 
 export const RadioView = styled.View`

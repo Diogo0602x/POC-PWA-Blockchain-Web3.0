@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
-import { View, Text, Image, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ActivityIndicator, Alert } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -42,9 +42,6 @@ const {brand, darkLight, primary} = Colors;
 
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
-import RoutesExamePaciente from '../ExamesPaciente'
-import RoutesExameLaboratorio from '../ExamesPaciente';
-
 
 // API client
 import axios from 'axios';
@@ -57,45 +54,91 @@ const Login = () => {
   const [messageType, setMessageType] = useState();
   const navigation = useNavigation();
 
-  const handleLoginPaciente = (credentials, setSubmitting) => {
-    const CPF = credentials.CPF;
-    const cpfLimpo = CPF.replace(/[\.\-]/g, '');
-    handleMessage(null);
-    const url ='http://lima.tarea.lan:8080/fhir/Patient/' + cpfLimpo;    
+  const [pacient, setPacient] = useState({});
+  const [organization, setOrganization] = useState({});
+  const [exames, setExames] = useState({});
+
+
+  const handleSubmit = useCallback((setSubmitting, url, url2) => {
     axios
       .get(url)
       .then((response) => {
-        const result = response.data;
-        navigation.navigate('RoutesExamePaciente', {result});
+        setPacient(response.data);
         setSubmitting(false);
       })
       .catch(error => {
         console.log(error);
         setSubmitting(false);
         handleMessage("Verifique os dados e tente novamente!");
+    }).finally(() => {
+      axios
+      .get(url2)
+      .then((response) => {
+        setExames(response.data);
+        setSubmitting(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setSubmitting(false);
+        handleMessage("Verifique os dados e tente novamente!");
+      });
     });
-  };
+  })
+
+  const handleSubmitCNPJ = useCallback((setSubmitting, url, url2) => {
+    axios
+      .get(url)
+      .then((response) => {
+        setOrganization(response.data);
+        setSubmitting(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setSubmitting(false);
+        handleMessage("Verifique os dados e tente novamente!");
+    }).finally(() => {
+      axios
+      .get(url2)
+      .then((response) => {
+        setExames(response.data);
+        setSubmitting(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setSubmitting(false);
+        handleMessage("Verifique os dados e tente novamente!");
+      });
+    });
+  })
 
   const senhaPadrao = "a"
+
+  const handleLoginPaciente = (credentials, setSubmitting) => {
+    const CPF = credentials.CPF;
+    const cpfLimpo = CPF.replace(/[\.\-]/g, '');
+    const url ='http://lima.tarea.lan:8080/fhir/Patient/' + cpfLimpo;  
+    const url2 ='http://lima.tarea.lan:8080/fhir/Observation?subject=Patient/' + cpfLimpo;
+
+    handleMessage(null);
+    handleSubmit(setSubmitting, url, url2)
+    if (pacient?.id && exames?.id) {
+      navigation.navigate('RoutesExamePaciente', {pacient, exames});
+    }
+  };
 
   const handleLoginLaboratorio = (credentials, setSubmitting) => {
     const CNPJ = credentials.CNPJ;
     const cnpjLimpo = CNPJ.replace(/[\.\/\-]/g, '');
+    const url ='http://lima.tarea.lan:8080/fhir/Organization/' + cnpjLimpo;
+    const url2 ='http://lima.tarea.lan:8080/fhir/Observation?performer=Observation/' + cnpjLimpo;
+
     handleMessage(null);
-    const url2 ='http://lima.tarea.lan:8080/fhir/Organization/' + cnpjLimpo;
-    axios
-      .get(url2)
-      .then((response) => {
-        const result = response.data;
-        navigation.navigate('RoutesExameLaboratorio', {result});
-        setSubmitting(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setSubmitting(false);
-        handleMessage("Verifique os dados e tente novamente!");
-    });
+    handleSubmitCNPJ(setSubmitting, url, url2)
+    if (organization?.id && exames?.id) {
+      navigation.navigate('RoutesExameLaboratorio', {organization, exames});
+    }
   };
+
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message);
     setMessageType(type);
@@ -151,9 +194,14 @@ const Login = () => {
                      } else {
                       if (values.password === senhaPadrao){
                         handleLoginPaciente(values, setSubmitting);
-                      }
-                      else {
-                        alert('Senha incorreta!');
+                      } else {
+                        Alert.alert(
+                          "Senha Incorreta ou vazia!", 
+                          "Aperte OK para voltar", 
+                          [
+                            { text: "OK", onPress: () => {navigation.goBack()} }
+                          ]
+                        );
                       }
                    }
                     break
@@ -164,10 +212,15 @@ const Login = () => {
                      } else {
                        if (values.password === senhaPadrao){
                          handleLoginLaboratorio(values, setSubmitting);
-                       }
-                       else {
-                         alert('Senha incorreta!');
-                       }
+                       } else {
+                        Alert.alert(
+                          "Dados incorretos ou vazios", 
+                          "Aperte OK para voltar", 
+                          [
+                            { text: "OK", onPress: () => {navigation.goBack()} }
+                          ]
+                        );
+                      }
                     }
                     break
                   }

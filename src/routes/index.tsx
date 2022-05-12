@@ -13,6 +13,7 @@ import Cadastrar from '../pages/Cadastrar';
 import ExamesPaciente from '../pages/ExamesPaciente';
 import ExamesLaboratorio from '../pages/ExamesLaboratorio';
 import RestaurarSenha from '../pages/RestaurarSenha';
+import ResultadoExame from '../pages/ResultadoExame';
 import RoutesExamePaciente from '../pages/ExamesPaciente/RoutesExamePaciente';
 import RoutesExameLaboratorio from '../pages/ExamesLaboratorio/RoutesExameLaboratorio';
 
@@ -43,7 +44,7 @@ const Routes = () => {
         <Stack.Screen name="RestaurarSenha" component={RestaurarSenha} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="RoutesExamePaciente" component={RoutesExamePaciente} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="RoutesExameLaboratorio" component={RoutesExameLaboratorio} options={{ headerTintColor: brand}}  />  
-
+        <Stack.Screen name="ResultadoExame" component={ResultadoExame} options={{ headerTintColor: brand}} />
       </Stack.Navigator>
     </NavigationContainer>
   )
