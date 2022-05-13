@@ -1,8 +1,6 @@
 import styled from 'styled-components/native';
 import {Colors} from '../../../components/styles';
-import { Dimensions } from 'react-native';
 
-const width = Dimensions.get("screen").width;
 const {brand, tertiary, } = Colors;
 
 export const WelcomeContainer = styled.View`
@@ -68,12 +66,5 @@ export const CardContainer = styled.TouchableOpacity`
 export const ExamesContainer = styled.View`
   flex: 1;
   width: 100%;
-  align-items: ${cardContent()};
+  align-items: center;
 `;
-
-function cardContent() {
-  if (width < 400) {
-    return "baseline";
-  }
-  return "center";
-}
