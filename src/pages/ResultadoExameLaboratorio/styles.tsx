@@ -68,12 +68,12 @@ export const CardContainer = styled.TouchableOpacity`
 export const ExamesContainer = styled.View`
   flex: 1;
   width: 100%;
-  align-self: ${cardContent()};
+  align-items: ${cardContent()};
 `;
 
 function cardContent() {
   if (width < 400) {
-    return "left";
+    return "baseline";
   }
   return "center";
 }

@@ -33,7 +33,7 @@ const ExamesLaboratorio = ({navigation, route}) => {
     const dataFormated = format(new Date(dataExame), 'dd/MM/yyyy')
     const resultadoExame = resource.valueString;
     return (
-      <CardContainer onPress={ () => navigation.navigate('ResultadoExame', {resource})}>
+      <CardContainer onPress={ () => navigation.navigate('ResultadoExameLaboratorio', {resource})}>
         <CardText>{tipoTeste}</CardText>
         <CardSpace>
           <CardSection>

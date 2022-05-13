@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 
-import {cnpjMask} from '../../pages/Login/Maskedinput';
+import {cpfMask} from '../../pages/Login/Maskedinput';
 
 import { format} from 'date-fns'
 
@@ -13,28 +13,29 @@ import {
   StyledFormAreaExames, 
   TitleExame,
   TextExame,
-  CardContainer,
-  ExamesContainer
+  CardContainer
 } from './styles';
 
 import {
+  InnerContainer, 
   StyledFormArea, 
   Line,
 } from '../../../components/styles';
 
-const ResultadoExame = ({route}) => {
+const ResultadoExameLaboratorio = ({route}) => {
   const exames = route.params;
   const code = exames.resource.code.coding[0].display;
   const dataExame = new Date(exames.resource.effectiveDateTime);
   const dataFormated = format(new Date(dataExame), 'dd/MM/yyyy')
   const resultado = exames.resource.valueString;
-  const laboratorio = exames.resource.performer[0].display;
+  const paciente = exames.resource.subject.display;
+  const idCPF = exames.resource.subject.reference;
 
   console.log(route.params)
     return (
       <>
         <StatusBar style="light"/>
-        <ExamesContainer style={{backgroundColor: "#FFF"}}>
+        <InnerContainer style={{backgroundColor: "#FFF"}}>
           <WelcomeContainer>     
             <StyledFormArea>
               <PageTitleExame welcome={true}>RESULTADO DE EXAMES</PageTitleExame>
@@ -49,8 +50,9 @@ const ResultadoExame = ({route}) => {
                 <TitleExame>Exame</TitleExame>
                 <TextExame>{code || 'Código'}</TextExame>
               </CardContainer>
-                <TitleExame>Laboratório</TitleExame>
-                <TextExame>{laboratorio || 'Laboratório'}</TextExame>
+                <TitleExame>Paciente</TitleExame>
+                <TextExame>{paciente || 'Laboratório'}</TextExame>
+                <TextExame>CPF: {cpfMask(idCPF) || 'Laboratório'}</TextExame>
               <CardContainer>
               </CardContainer>
               <CardContainer>
@@ -59,9 +61,9 @@ const ResultadoExame = ({route}) => {
               </CardContainer>
             </StyledFormAreaExames>
           </WelcomeContainer>
-        </ExamesContainer>
+        </InnerContainer>
       </>
     );
   };
 
-export default ResultadoExame;
+export default ResultadoExameLaboratorio;

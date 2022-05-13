@@ -11,11 +11,11 @@ import {
   ContainerCabecalho,
   CardText,
   CardSection,
-  CardSpace
+  CardSpace,
+  StyledFormAreaExame
 } from './styles';
 
 import {
-  StyledFormArea, 
   Line,
 } from '../../../components/styles';
 
@@ -33,30 +33,30 @@ const ExamesPaciente = ({navigation, route}) => {
     const dataFormated = format(new Date(dataExame), 'dd/MM/yyyy')
     const resultadoExame = resource.valueString;
     return (
-        <CardContainer onPress={ () => navigation.navigate('ResultadoExame', {resource})}>
-          <CardText>{tipoTeste}</CardText>
-          <CardSpace>
-            <CardSection>
-              <CardDescricao>Data</CardDescricao>
-              <CardDescricao>{dataFormated || 'Data realizada'}</CardDescricao>
-            </CardSection>
-            <CardSection>
-              <CardDescricao>Resultado</CardDescricao>
-              <CardDescricao> {resultadoExame || 'Resultado'}</CardDescricao>
-            </CardSection>
-          </CardSpace>
-        </CardContainer>
+      <CardContainer onPress={ () => navigation.navigate('ResultadoExame', {resource})}>
+        <CardText>{tipoTeste}</CardText>
+        <CardSpace>
+          <CardSection>
+            <CardDescricao>Data</CardDescricao>
+            <CardDescricao>{dataFormated || 'Data realizada'}</CardDescricao>
+          </CardSection>
+          <CardSection>
+            <CardDescricao>Resultado</CardDescricao>
+            <CardDescricao> {resultadoExame || 'Resultado'}</CardDescricao>
+          </CardSection>
+        </CardSpace>
+      </CardContainer>
     );
   }
 
   return(
-    <FlatList
+    <FlatList style={{backgroundColor: "#FFF"}}
       ListHeaderComponent={
-        <ContainerCabecalho style={{flexDirection:"column", alignItens: "center"}}>
-          <StyledFormArea>
+        <ContainerCabecalho style={{flexDirection:"column"}}>
+          <StyledFormAreaExame>
             <PageTitleExame welcome={true}>Olá, {cpfMask(namePacient) || 'Nome Paciente'} </PageTitleExame>
             <SubTitleExame welcome={true}>CPF: {cpfMask(idCPF) || 'CPF Paciente'}</SubTitleExame>
-          </StyledFormArea>
+          </StyledFormAreaExame>
           <Line/>
           <PageTitleExame>Exame(s)</PageTitleExame>
         </ContainerCabecalho>

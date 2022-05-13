@@ -14,6 +14,7 @@ import ExamesPaciente from '../pages/ExamesPaciente';
 import ExamesLaboratorio from '../pages/ExamesLaboratorio';
 import RestaurarSenha from '../pages/RestaurarSenha';
 import ResultadoExame from '../pages/ResultadoExame';
+import ResultadoExameLaboratorio from '../pages/ResultadoExameLaboratorio';
 import RoutesExamePaciente from '../pages/ExamesPaciente/RoutesExamePaciente';
 import RoutesExameLaboratorio from '../pages/ExamesLaboratorio/RoutesExameLaboratorio';
 
@@ -45,6 +46,7 @@ const Routes = () => {
         <Stack.Screen name="RoutesExamePaciente" component={RoutesExamePaciente} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="RoutesExameLaboratorio" component={RoutesExameLaboratorio} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="ResultadoExame" component={ResultadoExame} options={{ headerTintColor: brand}} />
+        <Stack.Screen name="ResultadoExameLaboratorio" component={ResultadoExameLaboratorio} options={{ headerTintColor: brand}} />
       </Stack.Navigator>
     </NavigationContainer>
   )

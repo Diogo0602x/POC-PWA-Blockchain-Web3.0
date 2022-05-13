@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { View, Image, ScrollView } from 'react-native';
+import { View, Image, ScrollView, Platform } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -41,6 +41,11 @@ import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper
 
 const RestaurarSenha = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
+  function focus() {
+    if (Platform.OS === "web") {
+      return "onFocus={this.onFocus}";
+    }
+  }
 
   return (
     <KeyboardAvoidingWrapper>
@@ -63,6 +68,7 @@ const RestaurarSenha = ({navigation}) => {
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <MyTextInput
+                  onFocus={focus()}
                   label="CPF"
                   icon="shield"
                   placeholder="XXX.XXX.XXX-XX"
@@ -75,6 +81,7 @@ const RestaurarSenha = ({navigation}) => {
                 />
 
                 <MyTextInput
+                  onFocus={focus()}
                   label="Digite sua nova senha"
                   icon="lock"
                   placeholder="* * * * * * * * *"
@@ -88,6 +95,7 @@ const RestaurarSenha = ({navigation}) => {
                   setHidePassword={setHidePassword}
                 />
                 <MyTextInput
+                  onFocus={focus()}
                   label="Confirme sua senha"
                   icon="lock"
                   placeholder="* * * * * * * * *"

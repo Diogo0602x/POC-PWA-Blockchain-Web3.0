@@ -9,10 +9,10 @@ import { RadioButton} from 'react-native-paper';
 import {cnpjMask, cpfMask} from './Maskedinput';
 
 // formik
-import { Formik, Field } from 'formik';
+import { Formik} from 'formik';
 
 // icons
-import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
+import {Octicons, Ionicons} from '@expo/vector-icons';
 
 import {
   StyledContainer, 
@@ -111,7 +111,7 @@ const Login = () => {
     });
   })
 
-  const senhaPadrao = "paciente2022"
+  const senhaPadrao = "a"
 
   const handleLoginPaciente = (credentials, setSubmitting) => {
     const CPF = credentials.CPF;
@@ -152,6 +152,12 @@ const Login = () => {
     } else if (checked === "laboratorio"){
       initialValues={CNPJ: '', password: ''}
       return initialValues
+    }
+  }
+
+  function focus() {
+    if (Platform.OS === "web") {
+      return "onFocus={this.onFocus}";
     }
   }
 
@@ -232,6 +238,8 @@ const Login = () => {
                   {checked === 'laboratorio' ? (
                   <>                  
                   <MyTextInput
+                    onFocus={focus()}
+                    autoFocus={true}
                     label="CNPJ"
                     icon="shield"
                     placeholder="XX.XXX.XXX/XXXX-XX"
@@ -246,6 +254,7 @@ const Login = () => {
                   ) : (
                     <>
                       <MyTextInput
+                      onFocus={focus()}
                       label="CPF"
                       icon="shield"
                       placeholder="XXX.XXX.XXX-XX"
@@ -259,6 +268,7 @@ const Login = () => {
                   </>
                   )} 
                   <MyTextInput
+                    onFocus={focus()}
                     label="Password"
                     icon="lock"
                     placeholder="* * * * * * * * *"

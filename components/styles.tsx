@@ -87,6 +87,7 @@ export const StyledTextInput = styled.TextInput`
   color: ${tertiary};
 `;
 
+
 export const StylexInputLable = styled.Text`
   color: ${tertiary};
   font-size: 13px;

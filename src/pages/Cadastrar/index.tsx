@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Image, ActivityIndicator, Platform } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -56,6 +56,12 @@ const Cadastrar = ({navigation}) => {
 
   // Data de nascinemto a ser enviada
   const [dab, setDab] = useState();
+
+  function focus() {
+    if (Platform.OS === "web") {
+      return "onFocus={this.onFocus}";
+    }
+  }
 
   const onChange = (event,selectedDate) => {
     const currentDate = selectedDate || date;
@@ -116,6 +122,7 @@ const handleMessage = (message, type = 'FAILED') => {
               onChange={onChange}
               maximumDate={new Date(now)}
               minimumDate={new Date(1910, 0, 1)}
+              style={{width: "100%"}}
             />
           )}
           </ContainerHeader>
@@ -138,6 +145,7 @@ const handleMessage = (message, type = 'FAILED') => {
             {({ handleChange, handleBlur, handleSubmit, values, isSubmitting }) => (
               <StyledFormArea>
                 <MyTextInput
+                  onFocus={focus()}
                   label="Nome Completo"
                   icon="person"
                   placeholder="Seu nome completo"
@@ -147,6 +155,7 @@ const handleMessage = (message, type = 'FAILED') => {
                   value={values.name}
                 />
                 <MyTextInput
+                  onFocus={focus()}
                   label="CPF"
                   icon="shield"
                   placeholder="XXX.XXX.XXX-XX"
@@ -157,6 +166,7 @@ const handleMessage = (message, type = 'FAILED') => {
                   keyboardType="numeric"
                 />
                 <MyTextInput
+                  onFocus={focus()}
                   label="Data de Nascimento"
                   icon="calendar"
                   placeholder="YYYY - MM - DD"
@@ -169,6 +179,7 @@ const handleMessage = (message, type = 'FAILED') => {
                   showDatePicker={showDatePicker}
                 />
                 <MyTextInput
+                  onFocus={focus()}
                   label="Email"
                   icon="mail"
                   placeholder="seu@email.com"
@@ -178,8 +189,8 @@ const handleMessage = (message, type = 'FAILED') => {
                   value={values.email}
                   keyboardType="email-address"
                 />
-
                 <MyTextInput
+                  onFocus={focus()}
                   label="Digite sua senha"
                   icon="lock"
                   placeholder="* * * * * * * * *"
@@ -193,6 +204,7 @@ const handleMessage = (message, type = 'FAILED') => {
                   setHidePassword={setHidePassword}
                 />
                 <MyTextInput
+                  onFocus={focus()}
                   label="Confirme sua senha"
                   icon="lock"
                   placeholder="* * * * * * * * *"

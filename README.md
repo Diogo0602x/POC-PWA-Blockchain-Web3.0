@@ -7,22 +7,6 @@
 <p>-Comunicação microsserviço e docker.</p>
 <p>-Banco de dados implantado internamente no blockchain, para auditoria inserção e alteração.</p>
 
-# Tela Inicial
+# Telas
 
-![TelaInicial](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-inicial.jpeg)
-
-# Tela Login
-
-![TelaLogin](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-login.jpeg)
-
-# Tela Recuperar
-
-![TelaRecuperar](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-recuperar.jpeg)
-
-# Tela Exame
-
-![TelaExame](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-exames.jpeg)
-
-# Tela Resultado Exame
-
-![TelaResultadoExame](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-resultado-exame.jpeg)
+![Telas](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/telas.jpeg)

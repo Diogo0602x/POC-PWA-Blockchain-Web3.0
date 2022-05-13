@@ -16,7 +16,7 @@ export const PageTitleExame = styled.Text`
   ${(props) => props.welcome &&`
     font-size: 20px;
     width: 100%;
-    text-align: left;
+    text-align: ${cardText()};
   `}
 `;
 
@@ -26,7 +26,7 @@ export const SubTitleExame = styled.Text`
   letter-spacing: 1px;
   font-weight: bold;
   color: ${tertiary};
-  text-align: left;
+  text-align: ${cardText()};
   width: 100%;
 
   ${(props) => props.welcome &&`
@@ -44,6 +44,7 @@ export const CardContainer = styled.TouchableOpacity`
   margin-top: 1%;
   margin-bottom: 10px;
   background-color: #F8F8FF	;
+  align-self: ${cardContent()}
 `;
 
 export const CardSection = styled.View`
@@ -74,6 +75,14 @@ export const CardDescricao = styled.Text`
   width: 100%;
 `;
 
+export const StyledFormAreaExame = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-self:center; 
+  align-items: center; 
+  justifyContent: center; 
+`;
+
 export const ContainerCabecalho = styled.View`
   margin-top: ${bottonSize()};
   margin-bottom: 8%;
@@ -94,12 +103,18 @@ function cardWidth() {
   if (width < 400) {
     return "92%";
   }
-  return "20%";
+  return "32.5%";
 }
 
 function cardText() {
   if (width < 400) {
-    return "center";
+    return "left";
   }
-  return "";
+  return "center";
+}
+function cardContent() {
+  if (width < 400) {
+    return "baseline";
+  }
+  return "center";
 }
