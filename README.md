@@ -21,7 +21,7 @@
 
 # Tela Exame
 
-![TelaExame](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-exame.jpeg)
+![TelaExame](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/tela-exames.jpeg)
 
 # Tela Resultado Exame
 
