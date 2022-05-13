@@ -111,7 +111,7 @@ const Login = () => {
     });
   })
 
-  const senhaPadrao = "a"
+  const senhaPadrao = "paciente2022"
 
   const handleLoginPaciente = (credentials, setSubmitting) => {
     const CPF = credentials.CPF;
@@ -289,12 +289,12 @@ const Login = () => {
                       <TextLinkContent>Recuperar</TextLinkContent>
                     </TextLink>
                   </ExtraView>
-                  <ExtraView>
+                  {/* <ExtraView>
                     <ExtraText>Não possui conta?</ExtraText>
                     <TextLink onPress={() => navigation.navigate('Cadastrar')}>
                       <TextLinkContent>Cadastrar</TextLinkContent>
                     </TextLink>
-                  </ExtraView>
+                  </ExtraView> */}
                 </StyledFormArea>
               )}
             </Formik>

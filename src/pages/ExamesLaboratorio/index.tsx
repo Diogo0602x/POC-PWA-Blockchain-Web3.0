@@ -7,9 +7,11 @@ import {
   PageTitleExame, 
   SubTitleExame, 
   CardDescricao,
-  CardText,
   CardContainer,
-  ContainerCabecalho
+  ContainerCabecalho,
+  CardText,
+  CardSection,
+  CardSpace
 } from './styles';
 
 import {
@@ -33,8 +35,16 @@ const ExamesLaboratorio = ({navigation, route}) => {
     return (
       <CardContainer onPress={ () => navigation.navigate('ResultadoExame', {resource})}>
         <CardText>{tipoTeste}</CardText>
-        <CardDescricao>Data:  {dataFormated || 'Data realizada'}</CardDescricao>
-        <CardDescricao>Resultado: {resultadoExame || 'Resultado'}</CardDescricao>
+        <CardSpace>
+          <CardSection>
+            <CardDescricao>Data</CardDescricao>
+            <CardDescricao>{dataFormated || 'Data realizada'}</CardDescricao>
+          </CardSection>
+          <CardSection>
+            <CardDescricao>Resultado</CardDescricao>
+            <CardDescricao> {resultadoExame || 'Resultado'}</CardDescricao>
+          </CardSection>
+        </CardSpace>
       </CardContainer>
     );
   }

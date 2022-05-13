@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 
-import {cnpjMask, cpfMask} from '../../pages/Login/Maskedinput';
+import {cnpjMask} from '../../pages/Login/Maskedinput';
 
-import { format, formatDistance, formatRelative, parseISO, subDays } from 'date-fns'
+import { format} from 'date-fns'
 
 import {
   PageTitleExame, 

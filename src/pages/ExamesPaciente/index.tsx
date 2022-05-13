@@ -9,7 +9,9 @@ import {
   CardDescricao,
   CardContainer,
   ContainerCabecalho,
-  CardText
+  CardText,
+  CardSection,
+  CardSpace
 } from './styles';
 
 import {
@@ -33,8 +35,16 @@ const ExamesPaciente = ({navigation, route}) => {
     return (
         <CardContainer onPress={ () => navigation.navigate('ResultadoExame', {resource})}>
           <CardText>{tipoTeste}</CardText>
-          <CardDescricao>Data:  {dataFormated || 'Data realizada'}</CardDescricao>
-          <CardDescricao>Resultado: {resultadoExame || 'Resultado'}</CardDescricao>
+          <CardSpace>
+            <CardSection>
+              <CardDescricao>Data</CardDescricao>
+              <CardDescricao>{dataFormated || 'Data realizada'}</CardDescricao>
+            </CardSection>
+            <CardSection>
+              <CardDescricao>Resultado</CardDescricao>
+              <CardDescricao> {resultadoExame || 'Resultado'}</CardDescricao>
+            </CardSection>
+          </CardSpace>
         </CardContainer>
     );
   }
@@ -42,7 +52,7 @@ const ExamesPaciente = ({navigation, route}) => {
   return(
     <FlatList
       ListHeaderComponent={
-        <ContainerCabecalho style={{flexDirection:"column"}}>
+        <ContainerCabecalho style={{flexDirection:"column", alignItens: "center"}}>
           <StyledFormArea>
             <PageTitleExame welcome={true}>Olá, {cpfMask(namePacient) || 'Nome Paciente'} </PageTitleExame>
             <SubTitleExame welcome={true}>CPF: {cpfMask(idCPF) || 'CPF Paciente'}</SubTitleExame>
