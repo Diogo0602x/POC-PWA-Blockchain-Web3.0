@@ -14,7 +14,8 @@ import {
   TitleExame,
   TextExame,
   CardContainer,
-  ExamesContainer
+  ExamesContainer,
+  LineExame
 } from './styles';
 
 import {
@@ -40,7 +41,7 @@ const ResultadoExame = ({route}) => {
               <PageTitleExame welcome={true}>RESULTADO DE EXAMES</PageTitleExame>
               <SubTitleExame welcome={true}>{dataFormated || 'Data Realizada'}</SubTitleExame>
             </StyledFormArea>
-            <Line/>
+            <LineExame/>
             <StyledFormAreaExames>
             <CardContainer>
                 <TitleExame>Teste Rápido Covid 19</TitleExame>

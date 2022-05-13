@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import {Colors} from '../../../components/styles';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 const {brand, tertiary} = Colors;
 
@@ -91,6 +91,28 @@ export const ContainerCabecalho = styled.View`
   flex: 1;
   width: 100%;
 `;
+
+export const Line = styled.View`
+  height: 1px;
+  width: ${widthWeb()};
+  background-color: #9CA3AF;
+  margin-vertical: 10px;
+  margin-left: ${marginLeft()};
+`;
+
+function widthWeb() {
+  if (Platform.OS === "web") {
+    return "34%";
+  }
+  return "100%";
+}
+
+function marginLeft() {
+  if (Platform.OS === "web") {
+    return "33%"
+  }
+  return "0.01%";
+}
 
 function bottonSize() {
   if (width < 400) {

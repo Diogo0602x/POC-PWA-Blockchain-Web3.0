@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import {Colors} from '../../../components/styles';
 
@@ -8,7 +9,7 @@ export const WelcomeContainer = styled.View`
   width: 100%;
   align-items: center;
   padding-top: 90px;
-  margin-left: 40px;
+  margin-left:  ${marginLeft()};
 `;
 
 export const StyledFormAreaExames = styled.View`
@@ -68,3 +69,31 @@ export const ExamesContainer = styled.View`
   width: 100%;
   align-items: center;
 `;
+
+export const LineExame = styled.View`
+  height: 1px;
+  width: ${widthWeb()};
+  background-color: #9CA3AF;
+  margin-right:  ${marginRight()};
+`;
+
+function widthWeb() {
+  if (Platform.OS === "web") {
+    return "33.1%";
+  }
+  return "100%";
+}
+
+function marginLeft() {
+  if (Platform.OS === "web") {
+    return "70%";
+  }
+  return "10%";
+}
+
+function marginRight() {
+  if (Platform.OS === "web") {
+    return "66.9%"
+  }
+  return "0.01%";
+}

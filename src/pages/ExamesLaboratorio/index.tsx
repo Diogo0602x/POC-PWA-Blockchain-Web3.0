@@ -50,7 +50,7 @@ const ExamesLaboratorio = ({navigation, route}) => {
   }
 
   return(
-    <FlatList
+    <FlatList style={{backgroundColor: "#FFF"}}
       ListHeaderComponent={
         <ContainerCabecalho style={{flexDirection:"column"}}>
           <StyledFormArea>

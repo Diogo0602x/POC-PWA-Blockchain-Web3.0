@@ -12,12 +12,9 @@ import {
   CardText,
   CardSection,
   CardSpace,
-  StyledFormAreaExame
+  StyledFormAreaExame,
+  Line
 } from './styles';
-
-import {
-  Line,
-} from '../../../components/styles';
 
 const ExamesPaciente = ({navigation, route}) => {
   const pacient = route.params.pacient;
