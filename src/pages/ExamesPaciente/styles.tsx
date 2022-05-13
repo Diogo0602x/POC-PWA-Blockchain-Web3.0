@@ -11,7 +11,7 @@ export const PageTitleExame = styled.Text`
   font-weight: bold;
   color: ${brand};
   padding-bottom: 5px;
-  text-align: ${cardText()}
+  text-align: ${cardText()};
 
   ${(props) => props.welcome &&`
     font-size: 20px;
@@ -44,7 +44,7 @@ export const CardContainer = styled.TouchableOpacity`
   margin-top: 1%;
   margin-bottom: 10px;
   background-color: #F8F8FF	;
-  align-self: ${cardContent()}
+  align-self: ${cardContent()};
 `;
 
 export const CardSection = styled.View`
@@ -70,8 +70,8 @@ export const CardText = styled.Text`
 export const CardDescricao = styled.Text`
   font-size: 16px;
   color: #000;
-  width: 100%
-  text-align: left
+  width: 100%;
+  text-align: left;
   width: 100%;
 `;
 
@@ -87,7 +87,7 @@ export const ContainerCabecalho = styled.View`
   margin-top: ${bottonSize()};
   margin-bottom: 8%;
   padding-start: 5%;
-  flex-direction: row
+  flex-direction: row;
   flex: 1;
   width: 100%;
 `;
@@ -109,7 +109,7 @@ function widthWeb() {
 
 function marginLeft() {
   if (Platform.OS === "web") {
-    return "33%"
+    return "33%";
   }
   return "0.01%";
 }
