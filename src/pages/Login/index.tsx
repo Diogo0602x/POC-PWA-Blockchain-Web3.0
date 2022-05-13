@@ -111,7 +111,7 @@ const Login = () => {
     });
   })
 
-  const senhaPadrao = "a"
+  const senhaPadrao = "paciente2022"
 
   const handleLoginPaciente = (credentials, setSubmitting) => {
     const CPF = credentials.CPF;
