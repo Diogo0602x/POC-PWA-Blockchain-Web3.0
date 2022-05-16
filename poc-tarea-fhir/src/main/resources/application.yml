@@ -1,0 +1,101 @@
+# configuracao do autocontido
+server:
+   port: 8080
+   tomcat:
+      relaxed-path-chars: '|,/'
+
+   banner:
+      location: classpath:/banner.txt
+
+spring:
+   main:
+      allow-bean-definition-overriding: true
+
+   application:
+      name: poc-tarea-name
+      context: /
+
+   config:
+      name: ${spring.application.name}
+      additional-location: classpath:/config/,classpath:/properties/
+      import: optional:file:${SPRING_LOCAL_CONFIG_PATH}/${spring.application.name}/
+
+   security:
+      user:
+         name: root
+         password: 123
+
+   autoconfigure:
+      exclude: 
+         - org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration
+         
+   quartz:
+      auto-startup: false
+         
+management:
+   info:
+      git:
+         mode: full
+   endpoint:
+      health:
+         show-details: when-authorized
+         show-components: when-authorized
+
+logging:
+   level:
+      root: INFO
+      br.com.tarea.pocfhir.config.FhirBeansConfiguration: DEBUG
+
+# Configuração para recuperação das definições
+# de um repositório Git.
+git:
+   usr: usuario
+   pwd: senha
+   # URI do repositório.
+   # ---
+   # IMPORTATE: Utilizar apenas SSH para ambiente de produção.
+   # ---
+#   uri: ssh://git@git.tarea.net.br/datasus/nuvem/rnds/ehr-fhir-profiles.git
+#   uri: https://${git.usr}:${git.pwd}@git.tarea.net.br/datasus/nuvem/rnds/ehr-fhir-profiles.git
+#   uri: ssh://git@localhost:57022/rnds/ehr-fhir-profiles.git
+#   uri: file:///tmp/profiles
+   uri: src/main/resources/fhir
+   
+   # Nome da branch, obrigatório.
+   branch: master
+   
+   # Tag para checkout.
+   # Caso não exista, usa a branch.
+   # Ao definir a "tag" a branch é sobrescrita.
+   tag:
+   
+   # Chaves de acesso.
+   # As chaves de acesso listadas aqui
+   # devem:
+   #  - ser de uso exclusivo desta aplicação
+   #  - ter acesso apenas de leitura
+   access-keys:
+      # Senha da chave
+      passphrase: 
+      
+      # Chave pública.
+      public: "ssh-rsa AAAAB3Nz...Uvw== DATASUS EHR Git"
+      # ---
+      
+      # Chave privada.
+      private: "-----BEGIN RSA PRIVATE KEY----- ... -----END RSA PRIVATE KEY-----"
+      # ---
+
+# Configuração do armazenamento local.
+store:
+   dir: ${user.dir}/local-repo
+   patient: ${store.dir}/pat
+   organization: ${store.dir}/org
+   observation: ${store.dir}/obs
+
+
+
+# >- inline 
+# |- multi line
+# \ inline com string entre áspas (") 
+# ---

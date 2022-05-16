@@ -1,0 +1,68 @@
+{
+  "name": "ObpcsTareaPOC",
+  "version": "1.0.0",
+  "description": "Chaincode package for ObpcsTareaPOC",
+  "main": "./dist/main.js",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "start": "node ./dist/main.js",
+    "start:dev": "tsc --watch | CORE_CHAINCODE_ID_NAME=ObpcsTareaPOC:1 CORE_CHAINCODE_LOGGING_SHIM=DEBUG nodemon --inspect ./dist/main.js --watch dist --peer.address grpc://localhost:7052",
+    "start:ochain": "tsc --watch | nodemon ./dist/main.js --watch dist --verbose",
+    "test": "jest --coverage"
+  },
+  "engines": {
+    "node": ">=8.9.4",
+    "npm": ">=5.6.0"
+  },
+  "engine-strict": true,
+  "engineStrict": true,
+  "dependencies": {
+    "@types/yup": "0.29.11",
+    "@types/node": "13.1.2",
+    "fabric-shim": "2.2.1",
+    "reflect-metadata": "0.1.13",
+    "yup": "0.32.9",
+    "tslib": "2.0.0"
+  },
+  "devDependencies": {
+    "@theledger/fabric-mock-stub": "5.0.0",
+    "@types/jest": "24.0.25",
+    "jest": "26.0.1",
+    "ts-jest": "25.2.1",
+    "typescript": "3.9.3",
+    "ts-node": "8.10.2",
+    "nodemon": "2.0.4"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/lib",
+      "<rootDir>/tests"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "coverageThreshold": {
+      "global": {
+        "branches": "100",
+        "functions": "0",
+        "lines": "40",
+        "statements": "40"
+      }
+    },
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/lib"
+    ]
+  }
+}

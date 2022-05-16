@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ValueSet xmlns="http://hl7.org/fhir">
+  <url value="http://tarea.net.br/fhir/r4/ValueSet/NomeExameCovid19" />
+  <version value="1.0.0" />
+  <name value="NomeExameCovid19" />
+  <title value="Nome Exames Covid-19" />
+  <status value="active" />
+  <experimental value="false" />
+  <description value="Classifica o exame laboratorial realizado para COVID-19." />
+  <immutable value="false" />
+  <compose>
+    <include>
+      <system value="http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19" />
+      <version value="*" />
+    </include>
+  </compose>
+</ValueSet>

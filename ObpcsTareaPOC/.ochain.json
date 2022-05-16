@@ -1,0 +1,11 @@
+{
+  "name": "ObpcsTareaPOC",
+  "description": "Chaincode package for ObpcsTareaPOC",
+  "chaincodeName": "ObpcsTareaPOC",
+  "chaincodeType": "node",
+  "configFileLocation": "/Users/herberson/projetos/dirtec-git-web3/poc-tarea-blockchain.yml",
+  "appBuilderVersion": "21.4.1",
+  "nodeVersion": "v12.22.12",
+  "tokenUser": "admin",
+  "enableMvccOptimization": false
+}

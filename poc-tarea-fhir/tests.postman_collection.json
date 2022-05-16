@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "142e4ff5-8aaa-4468-85bf-9d63761848d4",
+		"name": "POC - Tarea - FHIR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "Add Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resourceType\": \"Patient\",\n  \"identifier\": [\n    {\n      \"use\": \"official\",\n      \"type\": {\n        \"coding\": [\n          {\n            \"system\": \"http://terminology.hl7.org/CodeSystem/v2-0203\",\n            \"code\": \"TAX\"\n          }\n        ]\n      },\n      \"value\": \"{{patient-cpf}}\"\n    }\n  ],\n  \"active\": true,\n  \"name\": [\n    {\n      \"use\": \"official\",\n      \"text\": \"Patient {{patient-cpf}}\"\n    }\n  ],\n  \"telecom\": [\n    {\n      \"system\": \"phone\",\n      \"value\": \"5595992110552\",\n      \"use\": \"temp\"\n    },\n    {\n      \"system\": \"email\",\n      \"value\": \"patricia.gomes@example.com\",\n      \"rank\": 1\n    }\n  ],\n  \"gender\": \"male\",\n  \"birthDate\": \"1984-05-02\",\n  \"deceasedBoolean\": false,\n  \"address\": [\n    {\n      \"use\": \"home\",\n      \"type\": \"postal\",\n      \"line\": [\n        \"SHC SW CHSW BLOCOS 03 04 05 SALAS INST DE SAUDE\",\n        \"81\",\n        \"081\",\n        \"Atrás de Vitor Hugo\",\n        \"ASA NORTE\"\n      ],\n      \"city\": \"315780\",\n      \"state\": \"53\",\n      \"postalCode\": \"70673416\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fhir/Patient",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fhir/Patient/{{patient-cpf}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Patient",
+								"{{patient-cpf}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organization",
+			"item": [
+				{
+					"name": "Add Organization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resourceType\": \"Organization\",\n  \"identifier\": [\n    {\n      \"use\": \"official\",\n      \"type\": {\n        \"coding\": [\n          {\n            \"system\": \"http://terminology.hl7.org/CodeSystem/v2-0203\",\n            \"code\": \"TAX\"\n          }\n        ]\n      },\n      \"value\": \"{{organization-cnpj}}\"\n    }\n  ],\n  \"active\": true,\n  \"name\": \"Organization {{organization-cnpj}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fhir/Organization",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Organization"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Organization Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fhir/Organization/{{organization-cnpj}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Organization",
+								"{{organization-cnpj}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Observation",
+			"item": [
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Add Observation for Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+											"",
+											"pm.test(\"Location is present\", function () {",
+											"    pm.response.to.have.header(\"Location\");",
+											"    var location = pm.response.headers.get(\"Location\");",
+											"    var pieces = location.split('/');",
+											"    pm.collectionVariables.set(\"obs-doc-id-updt\", pieces[pieces.length-1]);",
+											"    pm.collectionVariables.set(\"_poc_doc_id_\", pieces[pieces.length-1]);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"resourceType\": \"Observation\",\n    \"identifier\": {\n        \"system\": \"http://tarea.net.br/fhir/r4/NamingSystem/{{organization-cnpj}}\",\n        \"value\": \"{{$guid}}\"\n    },\n    \"meta\": {\n        \"profile\": [\n            \"http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19\"\n        ]\n    },\n    \"status\": \"final\",\n    \"code\": {\n        \"coding\": [\n            {\n                \"system\": \"http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19\",\n                \"code\": \"94507-1\"\n            }\n        ]\n    },\n    \"subject\": {\n        \"reference\": \"Patient/{{patient-cpf}}\"\n    },\n    \"effectiveDateTime\": \"2020-01-10T14:38:00-02:00\",\n    \"issued\": \"2020-01-11T14:38:00-02:00\",\n    \"performer\": [\n        {\n            \"reference\": \"Organization/{{organization-cnpj}}\"\n        }\n    ],\n    \"valueString\": \"Detectável\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/fhir/Observation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fhir",
+										"Observation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Observation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"resourceType\": \"Observation\",\n    \"id\": \"{{obs-doc-id-updt}}\",\n    \"identifier\": [\n        {\n            \"system\": \"http://tarea.net.br/fhir/r4/NamingSystem/{{organization-cnpj}}\",\n            \"value\": \"{{$guid}}\"\n        }\n    ],\n    \"meta\": {\n        \"profile\": [\n            \"http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19\"\n        ]\n    },\n    \"status\": \"final\",\n    \"code\": {\n        \"coding\": [\n            {\n                \"system\": \"http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19\",\n                \"code\": \"94507-1\"\n            }\n        ]\n    },\n    \"subject\": {\n        \"reference\": \"Patient/{{patient-cpf}}\"\n    },\n    \"effectiveDateTime\": \"2020-01-10T14:38:00-03:00\",\n    \"issued\": \"2020-01-11T14:38:00-03:00\",\n    \"performer\": [\n        {\n            \"reference\": \"Organization/{{organization-cnpj}}\"\n        }\n    ],\n    \"valueString\": \"Não detectável {{$guid}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/fhir/Observation/{{obs-doc-id-updt}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fhir",
+										"Observation",
+										"{{obs-doc-id-updt}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Add Observation for Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+											"",
+											"pm.test(\"Location is present\", function () {",
+											"    pm.response.to.have.header(\"Location\");",
+											"    var location = pm.response.headers.get(\"Location\");",
+											"    var pieces = location.split('/');",
+											"    pm.collectionVariables.set(\"obs-doc-id-del\", pieces[pieces.length-1]);",
+											"    pm.collectionVariables.set(\"_poc_doc_id_\", pieces[pieces.length-1]);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"resourceType\": \"Observation\",\n    \"identifier\": {\n        \"system\": \"http://tarea.net.br/fhir/r4/NamingSystem/{{organization-cnpj}}\",\n        \"value\": \"{{$guid}}\"\n    },\n    \"meta\": {\n        \"profile\": [\n            \"http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19\"\n        ]\n    },\n    \"status\": \"final\",\n    \"code\": {\n        \"coding\": [\n            {\n                \"system\": \"http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19\",\n                \"code\": \"94507-1\"\n            }\n        ]\n    },\n    \"subject\": {\n        \"reference\": \"Patient/{{patient-cpf}}\"\n    },\n    \"effectiveDateTime\": \"2020-01-10T14:38:00-02:00\",\n    \"issued\": \"2020-01-11T14:38:00-02:00\",\n    \"performer\": [\n        {\n            \"reference\": \"Organization/{{organization-cnpj}}\"\n        }\n    ],\n    \"valueString\": \"Detectável\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/fhir/Observation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fhir",
+										"Observation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Observation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () { pm.response.to.have.status(204); });",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/fhir/Observation/{{obs-doc-id-del}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fhir",
+										"Observation",
+										"{{obs-doc-id-del}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add Observation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+									"",
+									"pm.test(\"Location is present\", function () {",
+									"    pm.response.to.have.header(\"Location\");",
+									"    var location = pm.response.headers.get(\"Location\");",
+									"    var pieces = location.split('/');",
+									"    pm.collectionVariables.set(\"obs-doc-id\", pieces[pieces.length-1]);",
+									"    pm.collectionVariables.set(\"_poc_doc_id_\", pieces[pieces.length-1]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resourceType\": \"Observation\",\n    \"identifier\": {\n        \"system\": \"http://tarea.net.br/fhir/r4/NamingSystem/{{organization-cnpj}}\",\n        \"value\": \"{{$guid}}\"\n    },\n    \"meta\": {\n        \"profile\": [\n            \"http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19\"\n        ]\n    },\n    \"status\": \"final\",\n    \"code\": {\n        \"coding\": [\n            {\n                \"system\": \"http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19\",\n                \"code\": \"94507-1\"\n            }\n        ]\n    },\n    \"subject\": {\n        \"reference\": \"Patient/{{patient-cpf}}\"\n    },\n    \"effectiveDateTime\": \"2020-01-10T14:38:00-03:00\",\n    \"issued\": \"2020-01-11T14:38:00-03:00\",\n    \"performer\": [\n        {\n            \"reference\": \"Organization/{{organization-cnpj}}\"\n        }\n    ],\n    \"valueString\": \"Não detectável\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fhir/Observation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Observation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Observation By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+									"",
+									"pm.test(\"Location is present\", function () {",
+									"    pm.response.to.have.header(\"Location\");",
+									"    var location = pm.response.headers.get(\"Location\");",
+									"    var pieces = location.split('/');",
+									"    pm.collectionVariables.set(\"obs-doc-id\", pieces[pieces.length-1]);",
+									"    pm.collectionVariables.set(\"_doc_id_\", pieces[pieces.length-1]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fhir/Observation/{{_poc_doc_id_}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Observation",
+								"{{_poc_doc_id_}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Observation By Organization Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+									"",
+									"pm.test(\"Location is present\", function () {",
+									"    pm.response.to.have.header(\"Location\");",
+									"    var location = pm.response.headers.get(\"Location\");",
+									"    var pieces = location.split('/');",
+									"    pm.collectionVariables.set(\"obs-doc-id\", pieces[pieces.length-1]);",
+									"    pm.collectionVariables.set(\"_doc_id_\", pieces[pieces.length-1]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fhir/Observation?performer=Observation/{{organization-cnpj}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Observation"
+							],
+							"query": [
+								{
+									"key": "performer",
+									"value": "Observation/{{organization-cnpj}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Observation By Patient Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+									"",
+									"pm.test(\"Location is present\", function () {",
+									"    pm.response.to.have.header(\"Location\");",
+									"    var location = pm.response.headers.get(\"Location\");",
+									"    var pieces = location.split('/');",
+									"    pm.collectionVariables.set(\"obs-doc-id\", pieces[pieces.length-1]);",
+									"    pm.collectionVariables.set(\"_doc_id_\", pieces[pieces.length-1]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fhir/Observation?subject=Patient/{{patient-cpf}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fhir",
+								"Observation"
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "Patient/{{patient-cpf}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "patient-cpf",
+			"value": "06181506926",
+			"type": "string"
+		},
+		{
+			"key": "organization-cnpj",
+			"value": "75005923000488",
+			"type": "string"
+		},
+		{
+			"key": "obs-doc-id",
+			"value": ""
+		},
+		{
+			"key": "_doc_id_",
+			"value": ""
+		},
+		{
+			"key": "obs-doc-id-updt",
+			"value": ""
+		},
+		{
+			"key": "_poc_doc_id_",
+			"value": ""
+		},
+		{
+			"key": "obs-doc-id-del",
+			"value": ""
+		}
+	]
+}

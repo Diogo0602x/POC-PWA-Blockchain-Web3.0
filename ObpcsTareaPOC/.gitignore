@@ -1,0 +1,13 @@
+.DS_Store
+.vscode/
+node_modules/
+coverage/
+tests/
+*.zip
+obcs/
+obp/
+.sync_temp/
+.sync_repo/
+.sync_backup/
+lib/
+.cc-lib.json

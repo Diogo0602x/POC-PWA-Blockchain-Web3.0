@@ -1,0 +1,49 @@
+[
+    {
+      "name": "Cadastro_paciente",
+      "policy": {
+        "identities": [
+          {
+            "role": {
+              "name": "member",
+              "mspId": "Org1MSP"
+            }
+          }
+        ],
+        "policy": {
+          "1-of": [
+            {
+              "signed-by": 0
+            }
+          ]
+        }
+      },
+      "requiredPeerCount": 0,
+      "maxPeerCount": 1,
+      "blockToLive": 100
+     
+    },
+    {
+        "name": "cadastro_organization",
+        "policy": {
+          "identities": [
+            {
+              "role": {
+                "name": "member",
+                "mspId": "Org1MSP"
+              }
+            }
+          ],
+          "policy": {
+            "1-of": [
+              {
+                "signed-by": 0
+              }
+            ]
+          }
+        },
+        "requiredPeerCount": 0,
+        "maxPeerCount": 1,
+        "blockToLive": 100
+    }
+  ]
