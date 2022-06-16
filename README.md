@@ -9,4 +9,4 @@
 
 # Telas
 
-![Telas](https://github.com/Diogo0602x/POC-Blockchain/blob/main/assets/telas.jpeg)
+![Telas](/telas.jpeg)

@@ -1,0 +1,23 @@
+spring:
+   application:
+      name: poc-tarea-fhir
+      
+   cloud:
+      config:
+         name: poc-tarea-fhir
+         uri: http://localhost:18080
+         
+         enabled: false
+         fail-fast: true
+         
+         username: ${SB_CLOUD_CONFIG_USERNAME}
+         password: ${SB_CLOUD_CONFIG_PASSWORD}
+         
+#       bus:
+#          refresh:
+#             enabled: true
+#          env:
+#             enabled: true
+
+spring.cloud.config.server.health.enabled: false
+

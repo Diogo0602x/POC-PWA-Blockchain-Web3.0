@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19" />
+  <version value="1.0.0" />
+  <name value="TesteRapidoCovid19" />
+  <title value="Teste Rápido Covid-19" />
+  <status value="draft" />
+  <description value="Teste rápido para identificar Covid-19." />
+  <fhirVersion value="4.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Observation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Observation.identifier">
+      <path value="Observation.identifier" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Observation.basedOn">
+      <path value="Observation.basedOn" />
+      <max value="0" />
+    </element>
+    <element id="Observation.partOf">
+      <path value="Observation.partOf" />
+      <max value="0" />
+    </element>
+    <element id="Observation.category">
+      <path value="Observation.category" />
+      <max value="0" />
+    </element>
+    <element id="Observation.code">
+      <path value="Observation.code" />
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://tarea.net.br/fhir/r4/ValueSet/NomeExameCovid19" />
+      </binding>
+    </element>
+    <element id="Observation.code.text">
+      <path value="Observation.code.text" />
+      <max value="0" />
+    </element>
+    <element id="Observation.subject.type">
+      <path value="Observation.subject.type" />
+      <max value="0" />
+    </element>
+    <element id="Observation.subject.identifier">
+      <path value="Observation.subject.identifier" />
+      <max value="0" />
+    </element>
+    <element id="Observation.subject.display">
+      <path value="Observation.subject.display" />
+      <max value="0" />
+    </element>
+    <element id="Observation.focus">
+      <path value="Observation.focus" />
+      <max value="0" />
+    </element>
+    <element id="Observation.encounter">
+      <path value="Observation.encounter" />
+      <max value="0" />
+    </element>
+    <element id="Observation.effective[x]">
+      <path value="Observation.effective[x]" />
+      <type>
+        <code value="dateTime" />
+      </type>
+    </element>
+    <element id="Observation.performer">
+      <path value="Observation.performer" />
+      <max value="1" />
+    </element>
+    <element id="Observation.performer.type">
+      <path value="Observation.performer.type" />
+      <max value="0" />
+    </element>
+    <element id="Observation.performer.identifier">
+      <path value="Observation.performer.identifier" />
+      <max value="0" />
+    </element>
+    <element id="Observation.performer.display">
+      <path value="Observation.performer.display" />
+      <max value="0" />
+    </element>
+    <element id="Observation.value[x]">
+      <path value="Observation.value[x]" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Observation.dataAbsentReason">
+      <path value="Observation.dataAbsentReason" />
+      <max value="0" />
+    </element>
+    <element id="Observation.interpretation">
+      <path value="Observation.interpretation" />
+      <max value="0" />
+    </element>
+    <element id="Observation.note">
+      <path value="Observation.note" />
+      <max value="0" />
+    </element>
+    <element id="Observation.bodySite">
+      <path value="Observation.bodySite" />
+      <max value="0" />
+    </element>
+    <element id="Observation.method">
+      <path value="Observation.method" />
+      <max value="0" />
+    </element>
+    <element id="Observation.specimen">
+      <path value="Observation.specimen" />
+      <max value="0" />
+    </element>
+    <element id="Observation.device">
+      <path value="Observation.device" />
+      <max value="0" />
+    </element>
+    <element id="Observation.referenceRange">
+      <path value="Observation.referenceRange" />
+      <max value="0" />
+    </element>
+    <element id="Observation.hasMember">
+      <path value="Observation.hasMember" />
+      <max value="0" />
+    </element>
+    <element id="Observation.derivedFrom">
+      <path value="Observation.derivedFrom" />
+      <max value="0" />
+    </element>
+    <element id="Observation.component">
+      <path value="Observation.component" />
+      <max value="0" />
+    </element>
+  </differential>
+</StructureDefinition>

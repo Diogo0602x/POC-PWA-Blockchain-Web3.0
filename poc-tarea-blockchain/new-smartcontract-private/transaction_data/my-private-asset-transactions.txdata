@@ -1,0 +1,58 @@
+[
+    {
+        "transactionName": "meusExames",
+        "transactionLabel": "A test meusExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "criarExames",
+        "transactionLabel": "A test criarExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {
+            "privateValue": "some value"
+        }
+    },
+    {
+        "transactionName": "lerExames",
+        "transactionLabel": "A test lerExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "atualizarExames",
+        "transactionLabel": "A test Atualizar Exames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {
+            "privateValue": "some other value"
+        }
+    },
+    {
+        "transactionName": "deletarExames",
+        "transactionLabel": "A test deletarExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "verificarMeusExames",
+        "transactionLabel": "A test verificarMeusExames transaction",
+        "arguments":[
+            "Org1MSP",
+            "001",
+            {
+                "privateValue": "some other value"
+            }
+        ],
+        "transientData": {}
+    }
+]

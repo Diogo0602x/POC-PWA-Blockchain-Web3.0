@@ -1,0 +1,44 @@
+[
+    {
+        "transactionName": "MeusExames",
+        "transactionLabel": "A test MeusExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "criarExames",
+        "transactionLabel": "A test criarExames transaction",
+        "arguments": [
+            "001",
+            "some value"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "lerExames",
+        "transactionLabel": "A test lerExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "atualizarExames",
+        "transactionLabel": "A test atualizarExames transaction",
+        "arguments": [
+            "001",
+            "some other value"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "deletarExames",
+        "transactionLabel": "A test deletarExames transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    }
+]

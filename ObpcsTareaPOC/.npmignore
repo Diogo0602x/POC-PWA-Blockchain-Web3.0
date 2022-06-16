@@ -1,0 +1,7 @@
+.vscode
+.ochain.json
+node_modules
+coverage
+tests
+obcs
+obp

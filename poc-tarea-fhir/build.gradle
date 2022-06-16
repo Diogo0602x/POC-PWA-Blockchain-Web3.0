@@ -1,0 +1,197 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+plugins {
+	id 'java'
+	id 'base'
+	id 'war'
+	id 'eclipse'
+	id 'org.springframework.boot' version '2.5.11'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.palantir.git-version' version '0.12.0-rc2'
+}
+
+group = 'br.con.tarea.pocfhir'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+	jcenter()
+	mavenCentral()
+	mavenLocal()
+}
+
+try {
+    version = gitVersion()
+} catch (Exception e) {
+    version = 'SNAPSHOT'
+}
+
+ext {
+	set('springCloudVersion', '2020.0.5')
+	set('jackson_version', '2.11.4')
+	set('hapifhir_version', '5.6.0')
+	set('jgit_version', "5.12.0.202106070339-r")
+	
+    try {
+        def details = versionDetails()
+        set('gitHashFull', details.gitHashFull)
+    } catch (Exception e) {
+        set('gitHashFull', 'SNAPSHOT')
+    }
+}
+
+configurations {
+	developmentOnly
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+dependencies {
+	// spring
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	
+	// config
+	implementation "org.springframework.cloud:spring-cloud-config-server"
+	
+	// cache
+	implementation "org.springframework.boot:spring-boot-starter-cache"
+	implementation "com.github.ben-manes.caffeine:caffeine:2.8.5"
+	
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+	
+    // hapi-fhir
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-base:${hapifhir_version}"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-server:${hapifhir_version}"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-structures-r4:${hapifhir_version}"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-structures-r5:${hapifhir_version}"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-validation:${hapifhir_version}"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-validation-resources-r4:${hapifhir_version}"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-server-openapi:${hapifhir_version}"
+    
+    implementation "co.elastic.apm:apm-opentracing:1.12.0"
+    implementation "com.jayway.jsonpath:json-path:2.6.0"
+    implementation "org.fhir:ucum:1.0.3"
+    
+	// === Jackson
+	// json formatting
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson_version}"
+	
+	//Lombok
+	compileOnly "org.projectlombok:lombok"
+	annotationProcessor "org.projectlombok:lombok"
+	
+	// git client
+    implementation "org.eclipse.jgit:org.eclipse.jgit:${jgit_version}"
+    implementation "org.eclipse.jgit:org.eclipse.jgit.ssh.jsch:${jgit_version}"
+    implementation "com.jcraft:jsch:0.1.55"
+    
+    //
+    implementation "one.microstream:microstream-storage-embedded:06.01.00-MS-GA"
+    
+	providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+	developmentOnly "org.springframework.boot:spring-boot-devtools"
+	
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+compileJava {
+	options.setAnnotationProcessorGeneratedSourcesDirectory(file("$projectDir/.apt_generated"))
+	options.compilerArgs = [
+		'-Amapstruct.suppressGeneratorTimestamp=true',
+		'-Amapstruct.defaultComponentModel=spring'
+	]
+}
+
+eclipse.project {
+    natures 'org.eclipse.buildship.core.gradleprojectnature'
+}
+
+eclipseJdt.doLast {
+    //definindo o encoding dos fontes para o projeto
+    File f = file('.settings/org.eclipse.core.resources.prefs')
+    f.write('eclipse.preferences.version=1\n')
+    f.append('encoding/<project>=UTF-8')
+    
+    //definindo o "unix end of line"
+    f = file('.settings/org.eclipse.core.runtime.prefs')
+    f.write('eclipse.preferences.version=1\n')
+    f.append('line.separator=\\n')    
+}
+
+eclipse {
+	classpath {
+	    downloadSources = true
+	    downloadJavadoc = true
+    }
+}
+
+bootRun {
+   jvmArgs = ["-Xms1024m", "-Xmx1024m"]
+}
+
+bootWar {
+    manifest {
+        attributes(
+            "Implementation-Title": 'main-manifest',
+            "Version": rootProject.version,
+            "Weblogic-Application-Version": rootProject.version,
+            "Git-Hash-Commit": "${gitHashFull}",
+            "Built-On": String.format('%1$tY-%1$tm-%1$tdT%1$tT%1$tz', new Date())
+        )
+    }
+}
+
+war {
+    enabled = true
+        
+    manifest {
+        attributes(
+            "Implementation-Title": 'main-manifest',
+            "Version": rootProject.version,
+            "Weblogic-Application-Version": rootProject.version,
+            "Git-Hash-Commit": "${gitHashFull}",
+            "Built-On": String.format('%1$tY-%1$tm-%1$tdT%1$tT%1$tz', new Date())
+        )
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            exclude '**/.DS_Store'
+            exclude '**/.gitignore'
+        }
+        resources {
+            exclude '**/.DS_Store'
+            exclude '**/.gitignore'
+        }
+    }
+    test {
+        java {
+            exclude '**/.DS_Store'
+            exclude '**/.gitignore'
+        }
+        resources {
+            exclude '**/.DS_Store'
+            exclude '**/.gitignore'
+        }
+    }
+}
+
+
