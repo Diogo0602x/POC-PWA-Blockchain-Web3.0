@@ -20,7 +20,6 @@ import {
 import {
   InnerContainer, 
   StyledFormArea, 
-  Line,
 } from '../../../components/styles';
 
 const ResultadoExameLaboratorio = ({route}) => {
@@ -31,8 +30,6 @@ const ResultadoExameLaboratorio = ({route}) => {
   const resultado = exames.resource.valueString;
   const paciente = exames.resource.subject.display;
   const idCPF = exames.resource.subject.reference;
-
-  console.log(route.params)
     return (
       <>
         <StatusBar style="light"/>
@@ -52,8 +49,8 @@ const ResultadoExameLaboratorio = ({route}) => {
                 <TextExame>{code || 'Código'}</TextExame>
               </CardContainer>
                 <TitleExame>Paciente</TitleExame>
-                <TextExame>{paciente || 'Laboratório'}</TextExame>
-                <TextExame>CPF: {cpfMask(idCPF) || 'Laboratório'}</TextExame>
+                <TextExame>{paciente || 'Paciente'}</TextExame>
+                <TextExame>CPF: {cpfMask(idCPF) || 'CPF'}</TextExame>
               <CardContainer>
               </CardContainer>
               <CardContainer>

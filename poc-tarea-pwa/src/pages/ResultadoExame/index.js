@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 
-import {cnpjMask} from '../../pages/Login/Maskedinput';
-
 import { format} from 'date-fns'
 
 import {
@@ -20,8 +18,9 @@ import {
 
 import {
   StyledFormArea, 
-  Line,
 } from '../../../components/styles';
+
+import { cnpjMask} from '../../pages/Login/Maskedinput';
 
 const ResultadoExame = ({route}) => {
   const exames = route.params;
@@ -29,9 +28,8 @@ const ResultadoExame = ({route}) => {
   const dataExame = new Date(exames.resource.effectiveDateTime);
   const dataFormated = format(new Date(dataExame), 'dd/MM/yyyy')
   const resultado = exames.resource.valueString;
-  const laboratorio = exames.resource.performer[0].display;
-
-  console.log(route.params)
+  const laboratorioNotFormated = exames.resource.identifier[0].system;
+  const laboratorio = cnpjMask(laboratorioNotFormated.slice(-14));
     return (
       <>
         <StatusBar style="light"/>

@@ -80,7 +80,7 @@ export const StyledFormAreaExame = styled.View`
   justify-content: center;
   align-self:center; 
   align-items: center; 
-  justifyContent: center; 
+  justify-content: center; 
 `;
 
 export const ContainerCabecalho = styled.View`
@@ -115,27 +115,27 @@ function marginLeft() {
 }
 
 function bottonSize() {
-  if (width < 400) {
+  if (width < 500) {
     return "25%";
   }
   return "5%";
 }
 
 function cardWidth() {
-  if (width < 400) {
+  if (width < 500) {
     return "92%";
   }
   return "32.5%";
 }
 
 function cardText() {
-  if (width < 400) {
+  if (width < 500) {
     return "left";
   }
   return "center";
 }
 function cardContent() {
-  if (width < 400) {
+  if (width < 500) {
     return "baseline";
   }
   return "center";

@@ -15,7 +15,7 @@ import * as Animatable from 'react-native-animatable'
 export default function TelaInicial({navigation}) {
 
   return (
-    <Container>
+     <Container>
       <ContainerLogo> 
         <Animatable.Image
           animation="flipInY"
@@ -24,7 +24,7 @@ export default function TelaInicial({navigation}) {
           resizeMode="contain"
         />
       </ContainerLogo>
-
+      
       <ContainerForm delay={600} animation="fadeInUp">
         <Title>Veja seus exames a qualquer momento, em qualquer lugar! </Title>
         <SubTitle>Faça seu login para ver seus exames</SubTitle>
@@ -35,4 +35,5 @@ export default function TelaInicial({navigation}) {
       </Button>
     </Container>
   );
+  
 }

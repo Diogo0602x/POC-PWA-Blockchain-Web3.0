@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 
 import { View, Text, Image, ActivityIndicator, Alert, Platform } from 'react-native';
 
@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { RadioButton} from 'react-native-paper';
 
 import {cnpjMask, cpfMask} from './Maskedinput';
+// import { ToastContainer, toast } from 'react-toastify';
 
 // formik
 import { Formik} from 'formik';
@@ -64,66 +65,55 @@ const Login = () => {
       .get(url)
       .then((response) => {
         setPacient(response.data);
-        setSubmitting(false);
       })
       .catch(error => {
         console.log(error);
-        setSubmitting(false);
         handleMessage("Verifique os dados e tente novamente!");
     }).finally(() => {
       axios
       .get(url2)
       .then((response) => {
         setExames(response.data);
-        setSubmitting(false);
       })
       .catch(error => {
         console.log(error);
-        setSubmitting(false);
         handleMessage("Verifique os dados e tente novamente!");
-      });
+      }).finally(() => setSubmitting(false));
     });
-  })
+  }, [])
 
   const handleSubmitCNPJ = useCallback((setSubmitting, url, url2) => {
     axios
       .get(url)
       .then((response) => {
         setOrganization(response.data);
-        setSubmitting(false);
       })
       .catch(error => {
         console.log(error);
-        setSubmitting(false);
         handleMessage("Verifique os dados e tente novamente!");
     }).finally(() => {
       axios
       .get(url2)
       .then((response) => {
         setExames(response.data);
-        setSubmitting(false);
       })
       .catch(error => {
         console.log(error);
-        setSubmitting(false);
         handleMessage("Verifique os dados e tente novamente!");
-      });
+      }).finally(() => setSubmitting(false));
     });
-  })
+  }, [])
 
-  const senhaPadrao = "paciente2022"
+  const senhaPadrao = "paciente2022";
 
-  const handleLoginPaciente = (credentials, setSubmitting) => {
+  const handleLoginPaciente =  (credentials, setSubmitting) => {
     const CPF = credentials.CPF;
     const cpfLimpo = CPF.replace(/[\.\-]/g, '');
     const url ='http://lima.tarea.lan:8080/fhir/Patient/' + cpfLimpo;  
     const url2 ='http://lima.tarea.lan:8080/fhir/Observation?subject=Patient/' + cpfLimpo;
 
-    handleMessage(null);
-    handleSubmit(setSubmitting, url, url2)
-    if (pacient?.id && exames?.id) {
-      navigation.navigate('RoutesExamePaciente', {pacient, exames});
-    }
+     handleMessage(null);
+     handleSubmit(setSubmitting, url, url2);
   };
 
   const handleLoginLaboratorio = (credentials, setSubmitting) => {
@@ -133,25 +123,20 @@ const Login = () => {
     const url2 ='http://lima.tarea.lan:8080/fhir/Observation?performer=Observation/' + cnpjLimpo;
 
     handleMessage(null);
-    handleSubmitCNPJ(setSubmitting, url, url2)
-    if (organization?.id && exames?.id) {
-      navigation.navigate('RoutesExameLaboratorio', {organization, exames});
-    }
+    handleSubmitCNPJ(setSubmitting, url, url2);
   };
 
-  const handleMessage = (message, type = 'FAILED') => {
+  const handleMessage = async (message, type = 'FAILED') => {
     setMessage(message);
     setMessageType(type);
   }
 
-  let initialValues = {};
+  let initialValues = {CPF: '', password: ''};
   function verifica() {
     if (checked === "paciente") {
-      initialValues={CPF: '', password: ''}
-      return initialValues
-    } else if (checked === "laboratorio"){
-      initialValues={CNPJ: '', password: ''}
-      return initialValues
+      initialValues = {CPF: '', password: ''}
+    } if (checked === "laboratorio") {
+      initialValues = {CNPJ: '', password: ''}
     }
   }
 
@@ -161,7 +146,16 @@ const Login = () => {
     }
   }
 
+  if (pacient?.id && exames?.id) {
+    navigation.navigate('RoutesExamePaciente', {pacient, exames});
+  }
+
+  if (organization?.id && exames?.id) {
+    navigation.navigate('RoutesExameLaboratorio', {organization, exames});
+  }
+
   return (
+    
     <KeyboardAvoidingWrapper>
       <StyledContainer>
         <StatusBar style="dark"/>
@@ -175,14 +169,14 @@ const Login = () => {
             <RadioButton
                 value="paciente"
                 status={checked === 'paciente' ? 'checked' : 'unchacked'}
-                onPress={() => {setChecked('paciente'); verifica()}}
+                onPress={() => {setChecked('paciente');}}
                 color="#38A69D"
               />
               <Text style={{fontWeight: 'bold', fontSize: 15}}>Paciente</Text>
               <RadioButton
                 value="laboratorio"
                 status={checked === 'laboratorio' ? 'checked' : 'unchacked'}
-                onPress={() => {setChecked('laboratorio'); verifica()}}
+                onPress={() => {setChecked('laboratorio');}}
                 color="#38A69D"
               />
               <Text style={{fontWeight: 'bold', fontSize: 15}}>Laboratório</Text>
@@ -194,7 +188,8 @@ const Login = () => {
               onSubmit={(values, {setSubmitting}) => {
                 switch(checked) {
                   case 'paciente':
-                    if (values.CPF === "" || values.password === "") {
+                    console.log(values);
+                    if (values.CPF === "" || values === "") {
                        handleMessage('Por favor preencha todos os campos!');
                        setSubmitting(false);
                      } else {
@@ -311,6 +306,7 @@ const Login = () => {
         </InnerContainer>
       </StyledContainer>
     </KeyboardAvoidingWrapper>
+ 
   );
 };
 
