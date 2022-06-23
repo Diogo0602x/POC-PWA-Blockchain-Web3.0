@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { View, Image, Platform } from 'react-native';
+import { View, Image, ScrollView, Platform } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -34,12 +34,12 @@ import {
 } from '../../../components/styles';
 
 // colors
-const {brand, darkLight} = Colors;
+const {brand, darkLight, primary} = Colors;
 
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
 
-const RestaurarSenha = ({navigation}) => {
+const RecuperarSenha = ({navigation}) => {
   const [hidePassword, setHidePassword] = useState(true);
   function focus() {
     if (Platform.OS === "web") {
@@ -148,4 +148,4 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
   );
 };
 
-export default RestaurarSenha;
+export default RecuperarSenha;

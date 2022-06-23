@@ -12,7 +12,7 @@ import {
   CardText,
   CardSection,
   CardSpace
-} from './styles';
+} from '../../../components/ExamesStyle';
 
 import {
   StyledFormArea, 
@@ -34,17 +34,17 @@ const ExamesLaboratorio = ({navigation, route}) => {
     const resultadoExame = resource.valueString;
     return (
       <CardContainer onPress={ () => navigation.navigate('ResultadoExameLaboratorio', {resource})}>
-        <CardText>{tipoTeste}</CardText>
-        <CardSpace>
-          <CardSection>
-            <CardDescricao>Data</CardDescricao>
-            <CardDescricao>{dataFormated || 'Data realizada'}</CardDescricao>
-          </CardSection>
-          <CardSection>
-            <CardDescricao>Resultado</CardDescricao>
-            <CardDescricao> {resultadoExame || 'Resultado'}</CardDescricao>
-          </CardSection>
-        </CardSpace>
+          <CardText>{tipoTeste}</CardText>
+          <CardSpace>
+            <CardSection>
+              <CardDescricao>Data</CardDescricao>
+              <CardDescricao>{dataFormated || 'Data realizada'}</CardDescricao>
+            </CardSection>
+            <CardSection>
+              <CardDescricao>Resultado</CardDescricao>
+              <CardDescricao> {resultadoExame || 'Resultado'}</CardDescricao>
+            </CardSection>
+          </CardSpace>
       </CardContainer>
     );
   }
@@ -64,6 +64,7 @@ const ExamesLaboratorio = ({navigation, route}) => {
       keyExtractor={item => item.resource.id}
       data={exames1}
       renderItem={({item})=> <InteressadoItem {...item} />}
+      showsVerticalScrollIndicator={false}
     />
     );
   };

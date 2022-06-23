@@ -14,7 +14,7 @@ import {
   CardSpace,
   StyledFormAreaExame,
   Line
-} from './styles';
+} from '../../../components/ExamesStyle';
 
 const ExamesPaciente = ({navigation, route}) => {
   const pacient = route.params.pacient;
@@ -61,6 +61,7 @@ const ExamesPaciente = ({navigation, route}) => {
       keyExtractor={item => item.resource.id}
       data={exames1}
       renderItem={({item})=> <InteressadoItem {...item} />}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

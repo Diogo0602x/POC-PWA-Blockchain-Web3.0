@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import { View, Text, Image, ActivityIndicator, Alert, Platform } from 'react-native';
 
@@ -30,12 +30,12 @@ import {
   StyledTextInput,
   ButtonText,
   Colors,
-  MsgBox,
   Line,
+  TextLinkContent,
+  MsgBox,
   ExtraView,
   ExtraText,
   TextLink,
-  TextLinkContent,
 } from '../../../components/styles';
 
 // Colors
@@ -132,6 +132,7 @@ const Login = () => {
   }
 
   let initialValues = {CPF: '', password: ''};
+
   function verifica() {
     if (checked === "paciente") {
       initialValues = {CPF: '', password: ''}
@@ -155,11 +156,10 @@ const Login = () => {
   }
 
   return (
-    
     <KeyboardAvoidingWrapper>
       <StyledContainer>
         <StatusBar style="dark"/>
-        <InnerContainer>
+        <InnerContainer >
           <View>
           <ContainerHeader animation="fadeInLeft" delay={500}>
             <Image style={{width: 200, height: 200, alignSelf: 'center'}} resizeMode="contain" source={require('../../../assets/logo.png')} />
@@ -169,14 +169,14 @@ const Login = () => {
             <RadioButton
                 value="paciente"
                 status={checked === 'paciente' ? 'checked' : 'unchacked'}
-                onPress={() => {setChecked('paciente');}}
+                onPress={() => {setChecked('paciente'); verifica()}}
                 color="#38A69D"
               />
               <Text style={{fontWeight: 'bold', fontSize: 15}}>Paciente</Text>
               <RadioButton
                 value="laboratorio"
                 status={checked === 'laboratorio' ? 'checked' : 'unchacked'}
-                onPress={() => {setChecked('laboratorio');}}
+                onPress={() => {setChecked('laboratorio'); verifica()}}
                 color="#38A69D"
               />
               <Text style={{fontWeight: 'bold', fontSize: 15}}>Laboratório</Text>
@@ -196,13 +196,14 @@ const Login = () => {
                       if (values.password === senhaPadrao){
                         handleLoginPaciente(values, setSubmitting);
                       } else {
-                        Alert.alert(
+                        alert(
                           "Senha Incorreta ou vazia!", 
                           "Aperte OK para voltar", 
                           [
                             { text: "OK", onPress: () => {navigation.goBack()} }
                           ]
-                        );
+                        )
+                        setSubmitting(false);
                       }
                    }
                     break
@@ -243,7 +244,7 @@ const Login = () => {
                     onBlur={handleBlur('CNPJ')}
                     value={cnpjMask(values.CNPJ)}
                     keyboardType="numeric"
-                    maxlength="14"                                       
+                    maxlength="18"                                       
                   />
                   </>
                   ) : (
@@ -258,7 +259,7 @@ const Login = () => {
                       onBlur={handleBlur('CPF')}
                       value={cpfMask(values.CPF)}
                       keyboardType="numeric"
-                      maxlength="11"
+                      maxlength="14"
                     />
                   </>
                   )} 
@@ -273,6 +274,7 @@ const Login = () => {
                     value={values.password}
                     secureTextEntry={hidePassword}
                     isPassword={true}
+                    autoCapitalize="none"
                     hidePassword={hidePassword}
                     setHidePassword={setHidePassword}
                   />
@@ -284,7 +286,7 @@ const Login = () => {
                   )}
                   {isSubmitting && (
                     <StyledButton disabled={true}>
-                      <ActivityIndicator size="large" color={primary} />
+                      <ActivityIndicator size=";" color={primary} />
                     </StyledButton>
                   )}
                   <Line/>
@@ -294,19 +296,18 @@ const Login = () => {
                       <TextLinkContent>Recuperar</TextLinkContent>
                     </TextLink>
                   </ExtraView>
-                  {/* <ExtraView>
+                  <ExtraView>
                     <ExtraText>Não possui conta?</ExtraText>
                     <TextLink onPress={() => navigation.navigate('Cadastrar')}>
                       <TextLinkContent>Cadastrar</TextLinkContent>
                     </TextLink>
-                  </ExtraView> */}
+                  </ExtraView>
                 </StyledFormArea>
               )}
             </Formik>
         </InnerContainer>
       </StyledContainer>
     </KeyboardAvoidingWrapper>
- 
   );
 };
 

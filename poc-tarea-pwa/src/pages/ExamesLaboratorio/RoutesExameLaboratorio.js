@@ -1,10 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import Cadastrar from '../Cadastrar';
+// import Cadastrar from '../Cadastrar';
 import ExamesLaboratorio from '../ExamesLaboratorio';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TelaInicial from '../TelaInicial';
+import InserirExame from '../InserirExame';
+import EditarExame from '../EditarExame';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +24,7 @@ function RoutesExameLaboratorio({route}) {
                     <Ionicons name="heart-outline" color={color} size={size} />
                 )
             }}/>
-            <Tab.Screen name="Perfil" component={Cadastrar} options={{
+            <Tab.Screen name="Inserir Exame" component={InserirExame} initialParams={organization} options={{
                 tabBarIcon: ({color, size}) => (
                     <Ionicons name="person-outline" color={color} size={size} />
                 )

@@ -14,15 +14,17 @@ import {
   TitleExame,
   TextExame,
   CardContainer,
-  LineExame
+  LineExame,
+  StyledButton,
 } from './styles';
 
 import {
   InnerContainer, 
   StyledFormArea, 
+  ButtonText
 } from '../../../components/styles';
 
-const ResultadoExameLaboratorio = ({route}) => {
+const ResultadoExameLaboratorio = ({route, navigation}) => {
   const exames = route.params;
   const code = exames.resource.code.coding[0].display;
   const dataExame = new Date(exames.resource.effectiveDateTime);
@@ -57,6 +59,9 @@ const ResultadoExameLaboratorio = ({route}) => {
                 <TitleExame>Resultado</TitleExame>
                 <TextExame>{resultado || 'Resultado Exame'}</TextExame>         
               </CardContainer>
+              <StyledButton onPress={() => navigation.navigate('EditarExame', {exames})}>
+              <ButtonText>Editar Exame</ButtonText>
+            </StyledButton>
             </StyledFormAreaExames>
           </WelcomeContainer>
         </InnerContainer>

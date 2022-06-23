@@ -46,6 +46,17 @@ export const SubTitleExame = styled.Text`
   `}
 `;
 
+export const StyledButton = styled.TouchableOpacity`
+  padding: 15px;
+  background-color: ${ brand };
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-vertical: 5px;
+  width: 37%;
+  height: 14%;
+`;
+
 export const TitleExame = styled.Text`
   font-size: 16.3px;
   text-align: left;

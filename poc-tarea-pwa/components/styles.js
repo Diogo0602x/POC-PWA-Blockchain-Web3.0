@@ -1,8 +1,6 @@
 import styled from 'styled-components/native';
-import { TextInput } from 'react-native-web';
 import * as Animatable from 'react-native-animatable'
 import Constants from 'expo-constants';
-import { View, Text, Image, ScrollView } from 'react-native';
 
 const StatusBarHeight = Constants.statusBarHeight;
 // colors
@@ -160,7 +158,6 @@ export const ExtraText = styled.Text`
   color: ${tertiary};
   font-size: 15px;
 `;
-
 export const TextLink = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
@@ -189,13 +186,6 @@ export const Container = styled.View`
   justify-content: space-around;
 `;
 
-export const ContainerHeader = Animatable.createAnimatableComponent(styled.View`
-    margin-top: 5%;
-    margin-bottom: 8%;
-    padding-start: 5%;
-    flex-direction: column;
-`)
-
 export const Label = styled.Text`
   color: #1F2937;
   font-size: 16px;
@@ -204,3 +194,10 @@ export const Label = styled.Text`
 export const InputText = styled.TextInput`
   height: 70px;
 `;
+
+export const ContainerHeader = Animatable.createAnimatableComponent(styled.View`
+    margin-top: 5%;
+    margin-bottom: 8%;
+    padding-start: 5%;
+    flex-direction: column;
+`);
