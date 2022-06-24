@@ -5,6 +5,7 @@ import { getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import ExamesPaciente from '../ExamesPaciente';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TelaInicial from '../TelaInicial';
+import Cadastrar from '../Cadastrar';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +19,11 @@ function RoutesExamePaciente({route}) {
             }}
          >
             <Tab.Screen name="Exames" component={ExamesPaciente} initialParams={paciente} options={{
+                tabBarIcon: ({color, size}) => (
+                    <Ionicons name="heart-outline" color={color} size={size} />
+                )
+            }}/>
+            <Tab.Screen name="Perfil" component={Cadastrar} initialParams={paciente} options={{
                 tabBarIcon: ({color, size}) => (
                     <Ionicons name="heart-outline" color={color} size={size} />
                 )

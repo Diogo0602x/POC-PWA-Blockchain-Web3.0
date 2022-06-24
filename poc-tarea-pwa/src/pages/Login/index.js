@@ -29,13 +29,13 @@ import {
   StyledButton, 
   StyledTextInput,
   ButtonText,
-  Colors,
   Line,
-  TextLinkContent,
-  MsgBox,
   ExtraView,
   ExtraText,
   TextLink,
+  TextLinkContent,
+  Colors,
+  MsgBox,
 } from '../../../components/styles';
 
 // Colors
@@ -286,7 +286,7 @@ const Login = () => {
                   )}
                   {isSubmitting && (
                     <StyledButton disabled={true}>
-                      <ActivityIndicator size=";" color={primary} />
+                      <ActivityIndicator size="large" color={primary} />
                     </StyledButton>
                   )}
                   <Line/>

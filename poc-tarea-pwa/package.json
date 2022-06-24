@@ -50,7 +50,7 @@
     "react-native-mask-cpf-cnpj": "^2.0.3",
     "react-native-paper": "^4.12.0",
     "react-native-reanimated": "~2.3.1",
-    "react-native-safe-area-context": "3.3.2",
+    "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
     "resolve-dependency": "1.0.3",
