@@ -1,0 +1,32 @@
+version: '2.4'
+
+services:
+  react_native_app:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+    tty: true
+    ports:
+      - '19006:19006'
+      - '19001:19001'
+      - '19002:19002'
+    volumes:
+      - ./poc-tarea-pwa:/opt/poc-blockchain-pwa/app:delegated
+      - ./poc-tarea-pwa/package.json:/opt/poc-blockchain-pwa/package.json
+      - ./poc-tarea-pwa/package-lock.json:/opt/poc-blockchain-pwa/package-lock.json
+      - notused:/opt/poc-blockchain-pwa/app/node_modules
+    healthcheck:
+      disable: true
+
+volumes:
+  notused:
+
+# Comando para rodar o container:
+
+# docker-compose build: builds the container
+# docker-compose up: spins up the container
+# docker-compose up -d: spins up the container in detached mode (background)
+# docker-compose down --remove-orphans: brings down the container and cleans up abandoned containers

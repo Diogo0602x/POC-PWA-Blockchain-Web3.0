@@ -10,3 +10,7 @@
 # Telas
 
 ![Telas](/telas.jpeg)
+
+# Comandos deployment
+
+<p>-docker-compose up</p>
