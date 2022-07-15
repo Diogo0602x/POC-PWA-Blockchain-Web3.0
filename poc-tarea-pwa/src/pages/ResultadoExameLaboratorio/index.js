@@ -1,10 +1,16 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 
 import {cpfMask} from '../../pages/Login/Maskedinput';
 
 import { format} from 'date-fns'
+
+import { View } from 'react-native-animatable';
+
+import { DeletarExame } from '../../../service/DeletarExameService';
+
+import { Entypo, FontAwesome } from '@expo/vector-icons'; 
 
 import {
   PageTitleExame, 
@@ -15,13 +21,14 @@ import {
   TextExame,
   CardContainer,
   LineExame,
-  StyledButton,
+  ButtonExam,
 } from './styles';
 
 import {
   InnerContainer, 
   StyledFormArea, 
-  ButtonText
+  ButtonText,
+  MsgBox,
 } from '../../../components/styles';
 
 const ResultadoExameLaboratorio = ({route, navigation}) => {
@@ -32,6 +39,25 @@ const ResultadoExameLaboratorio = ({route, navigation}) => {
   const resultado = exames.resource.valueString;
   const paciente = exames.resource.subject.display;
   const idCPF = exames.resource.subject.reference;
+  const id = exames.resource.id;
+
+  function deletarExame({}) {
+    DeletarExame.deletarExame(id)    
+    .then((response) => { 
+      if (response.status !== 204){
+        alert("Cheque os dados e teve novamente!")
+      }
+      alert("Exame deletado com sucesso!")    
+      navigation.navigate('TelaInicial');
+    })
+    .catch((err) => {alert("Cheque os dados e tente novamente!")})
+  }
+  
+  const handleMessage = (message, type = 'FAILED') => {
+    setMessage (message);
+    setMessageType(type);
+  };
+
     return (
       <>
         <StatusBar style="light"/>
@@ -43,7 +69,7 @@ const ResultadoExameLaboratorio = ({route, navigation}) => {
             </StyledFormArea>
             <LineExame/>
             <StyledFormAreaExames>
-            <CardContainer>
+              <CardContainer>
                 <TitleExame>Teste Rápido Covid 19</TitleExame>
               </CardContainer>
               <CardContainer>
@@ -59,11 +85,16 @@ const ResultadoExameLaboratorio = ({route, navigation}) => {
                 <TitleExame>Resultado</TitleExame>
                 <TextExame>{resultado || 'Resultado Exame'}</TextExame>         
               </CardContainer>
-              <StyledButton onPress={() => navigation.navigate('EditarExame', {exames})}>
-              <ButtonText>Editar Exame</ButtonText>
-            </StyledButton>
+              <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                <ButtonExam style={{backgroundColor: "#38A69D"}} onPress={() => navigation.navigate('EditarExame', {exames})}>
+                  <ButtonText><FontAwesome name="edit" size={22} color="white" style={{paddingRight: '15px'}} />Editar Exame</ButtonText>
+                </ButtonExam>
+                <ButtonExam style={{backgroundColor: "#EF4444"}} onPress={deletarExame} onClick="window.location.reload()">
+                  <ButtonText><Entypo  name="trash" size={22} color="white" style={{paddingRight: '15px'}} />Deletar Exame</ButtonText>
+                </ButtonExam>
+              </View>
             </StyledFormAreaExames>
-          </WelcomeContainer>
+           </WelcomeContainer>
         </InnerContainer>
       </>
     );

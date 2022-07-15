@@ -9,7 +9,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import TelaInicial from '../pages/TelaInicial';
 import Login from '../pages/Login';
-import Cadastrar from '../pages/Cadastrar';
 import ExamesPaciente from '../pages/ExamesPaciente';
 import ExamesLaboratorio from '../pages/ExamesLaboratorio';
 import RestaurarSenha from '../pages/RestaurarSenha';
@@ -43,7 +42,6 @@ const Routes = () => {
         <Stack.Screen name="ExamesPaciente" component={ExamesPaciente}  options={{headerTintColor: primary}}  /> 
         <Stack.Screen name="ExamesLaboratorio" component={ExamesLaboratorio}  options={{headerTintColor: primary}}  /> 
         <Stack.Screen name="RestaurarSenha" component={RestaurarSenha} options={{ headerTintColor: brand}}  />  
-        <Stack.Screen name="Cadastrar" component={Cadastrar} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="RoutesExamePaciente" component={RoutesExamePaciente} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="RoutesExameLaboratorio" component={RoutesExameLaboratorio} options={{ headerTintColor: brand}}  />  
         <Stack.Screen name="ResultadoExame" component={ResultadoExame} options={{ headerTintColor: brand}} />

@@ -134,7 +134,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
   text-align: center;
   font-size: 13px;
-  color: ${props => props.type == 'SUCESS' ? green : red};
+  color: ${props => props.type == 'SUCCESS' ? green : red};
 `;
 
 export const Line = styled.View`
@@ -196,8 +196,8 @@ export const InputText = styled.TextInput`
 `;
 
 export const ContainerHeader = Animatable.createAnimatableComponent(styled.View`
-    margin-top: 5%;
-    margin-bottom: 8%;
-    padding-start: 5%;
-    flex-direction: column;
+  margin-top: 5%;
+  margin-bottom: 8%;
+  padding-start: 5%;
+  flex-direction: column;
 `);

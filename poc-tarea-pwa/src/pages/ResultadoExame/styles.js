@@ -9,17 +9,18 @@ export const WelcomeContainer = styled.View`
   width: 100%;
   align-items: center;
   padding-top: 90px;
-  margin-left:  ${marginLeft()};
+  margin-left: 40px;
 `;
 
 export const StyledFormAreaExames = styled.View`
   padding-top: 10px;
   width: 100%;
+  align-items: ${styledArea};
 `;
 
 export const PageTitleExame = styled.Text`
   font-size: 18px;
-  text-align: left;
+  text-align: ${centerWeb()};
   font-weight: bold;
   color: ${brand};
   padding-bottom: 5px;
@@ -36,7 +37,7 @@ export const SubTitleExame = styled.Text`
   letter-spacing: 1px;
   font-weight: bold;
   color: ${tertiary};
-  text-align: left;
+  text-align: ${centerWeb()};
   width: 100%;
 
   ${(props) => props.welcome &&`
@@ -46,16 +47,27 @@ export const SubTitleExame = styled.Text`
   `}
 `;
 
+export const StyledButton = styled.TouchableOpacity`
+  padding: 15px;
+  background-color: ${ brand };
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-vertical: 5px;
+  width: 37%;
+  height: 14%;
+`;
+
 export const TitleExame = styled.Text`
   font-size: 16.3px;
-  text-align: left;
+  text-align: ${centerWeb};
   font-weight: bold;
   padding-bottom: 5px;
 `;
 
 export const TextExame = styled.Text`
   font-size: 16.3px;
-  text-align: left;
+  text-align: ${centerWeb()};
   padding-bottom: 5px;
 `;
 
@@ -74,26 +86,25 @@ export const LineExame = styled.View`
   height: 1px;
   width: ${widthWeb()};
   background-color: #9CA3AF;
-  margin-right:  ${marginRight()};
 `;
 
 function widthWeb() {
   if (Platform.OS === "web") {
-    return "33.1%";
+    return "37.2%";
   }
-  return "100%";
+  return "98%";
 }
 
-function marginLeft() {
+function centerWeb() {
   if (Platform.OS === "web") {
-    return "70%";
+    return "center";
   }
-  return "10%";
+  return "left";
 }
 
-function marginRight() {
+function styledArea() {
   if (Platform.OS === "web") {
-    return "66.9%"
+    return "center";
   }
-  return "0.01%";
+  return "flex-start";
 }

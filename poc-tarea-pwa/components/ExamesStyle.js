@@ -4,8 +4,6 @@ import { Dimensions, Platform } from 'react-native';
 
 const {brand, tertiary} = Colors;
 
-const width = Dimensions.get("screen").width;
-
 export const PageTitleExame = styled.Text`
   font-size: 19px;
   font-weight: bold;
@@ -39,7 +37,7 @@ export const SubTitleExame = styled.Text`
 export const CardContainer = styled.TouchableOpacity`
   width: ${cardWidth()};
   border-radius: 12px;
-  margin-left: 5%;
+  padding-left: 2%;
   padding-bottom: 20px;
   margin-top: 1%;
   margin-bottom: 10px;
@@ -84,8 +82,8 @@ export const StyledFormAreaExame = styled.View`
 `;
 
 export const ContainerCabecalho = styled.View`
-  margin-top: ${bottonSize()};
-  margin-bottom: ${cardMargin()};
+  padding-top: ${marginTop()};
+  padding-bottom: ${cardMargin()};
   padding-start: 5%;
   flex-direction: row;
   flex: 1;
@@ -94,56 +92,51 @@ export const ContainerCabecalho = styled.View`
 
 export const Line = styled.View`
   height: 1px;
-  width: ${widthWeb()};
+  width: ${lineWidth()};
   background-color: #9CA3AF;
   margin-vertical: 10px;
-  margin-left: ${marginLeft()};
+  align-self: ${cardContent()}
 `;
 
-function widthWeb() {
-  if (Platform.OS === "web") {
-    return "34%";
-  }
-  return "100%";
-}
 
-function marginLeft() {
+function marginTop() {
   if (Platform.OS === "web") {
-    return "33%";
+    return "5%";
   }
-  return "0.01%";
-}
-
-function bottonSize() {
-  if (width < 500) {
-    return "25%";
-  }
-  return "5%";
+  return "25%";
 }
 
 function cardWidth() {
-  if (width < 500) {
-    return "92%";
+  if (Platform.OS === "web") {
+    return "34%";
   }
-  return "32.5%";
+  return "95%";
+}
+
+function lineWidth() {
+  if (Platform.OS === "web") {
+    return "34.5%";
+  }
+  return "98%";
 }
 
 function cardText() {
-  if (width < 500) {
-    return "left";
+  if (Platform.OS === "web") {
+    return "center";
   }
-  return "center";
+  return "left";
 }
+
 function cardContent() {
-  if (width < 500) {
-    return "baseline";
+  if (Platform.OS === "web") {
+    return "center";
   }
-  return "center";
+  return "baseline";
 }
 
 function cardMargin() {
   if (Platform.OS === "web") {
-    return "5%";
+    return "5.5%";
   }
   return "1%";
 }

@@ -42,7 +42,7 @@ const ResultadoExame = ({route}) => {
             <LineExame/>
             <StyledFormAreaExames>
             <CardContainer>
-                <TitleExame>Teste Rápido Covid 19</TitleExame>
+                <TitleExame style={{textAlign: 'center'}}>Teste Rápido Covid 19</TitleExame>
               </CardContainer>
               <CardContainer>
                 <TitleExame>Exame</TitleExame>

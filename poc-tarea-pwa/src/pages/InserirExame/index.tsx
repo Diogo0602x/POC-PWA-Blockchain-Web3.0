@@ -7,6 +7,7 @@ import moment from 'moment';
 
 // icons
 import {Octicons} from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'; 
 
 import ExameModel from '../../../models/exameModel'
 import { ExameService } from '../../../service/ExameService';
@@ -66,36 +67,36 @@ const InserirExame = ({navigation, route}: any) => {
 //Modelo do exame e função para inserir o exame-------------------------------------------------------------------
 
   const exame: ExameModel = {
-      resourceType: "Observation",
-      identifier: {
-          system: `http://tarea.net.br/fhir/r4/NamingSystem/${cnpj}`,
-          value: `${parseInt(ultimo_exame_value) + 1}`
-      },
-      meta: {
-          profile: [
-              "http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19"
-          ]
-      },
-      status: "final",
-      code: {
-          coding: [
-              {
-                  system: "http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19",
-                  code: examCode
-              }
-          ]
-      },
-      subject: {
-          reference: `Patient/${CPF.replace(/[\.\-]/g, '')}`
-      },
-      effectiveDateTime: `${dataExame}`,
-      issued: `${dataInsercao}`,
-      performer: [
-          {
-              reference: `Organization/${cnpj}`
-          }
-      ],
-      valueString: result
+    resourceType: "Observation",
+    identifier: {
+      system: `http://tarea.net.br/fhir/r4/NamingSystem/${cnpj}`,
+      value: `${parseInt(ultimo_exame_value) + 1}`
+    },
+    meta: {
+      profile: [
+        "http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19"
+      ]
+    },
+    status: "final",
+    code: {
+      coding: [
+        {
+          system: "http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19",
+          code: examCode
+        }
+      ]
+    },
+    subject: {
+      reference: `Patient/${CPF.replace(/[\.\-]/g, '')}`
+    },
+    effectiveDateTime: `${dataExame}`,
+    issued: `${dataInsercao}`,
+    performer: [
+      {
+        reference: `Organization/${cnpj}`
+      }
+    ],
+    valueString: result
   }
 
   function inserirExame() {
@@ -104,7 +105,8 @@ const InserirExame = ({navigation, route}: any) => {
       if (response.status !== 201){
         alert("Cheque os dados e teve novamente!")
       }
-      console.log(response.status)
+      alert("Exame inserido com sucesso!")
+      navigation.navigate('TelaInicial')
     })
     .catch((err) => {alert("Cheque os dados e tente novamente!")})
   }
@@ -193,7 +195,7 @@ const handleMessage = (message: any, type = 'FAILED') => {
                 <MsgBox type={messageType}>{message}</MsgBox>
                 {(
                   <StyledButton onPress={inserirExame}>
-                    <ButtonText>Inserir Exame</ButtonText>
+                    <ButtonText><FontAwesome name="edit" size={22} color="white" style={{paddingRight: '10px'}} />Inserir Exame</ButtonText>
                   </StyledButton>
                 )}
               </StyledFormArea>

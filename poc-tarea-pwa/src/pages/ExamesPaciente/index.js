@@ -25,7 +25,7 @@ const ExamesPaciente = ({navigation, route}) => {
   const exames1 = route.params.exames.entry;
   const tipoTeste = exames.entry[0].resource.code.coding[0].display;
 
-  function InteressadoItem( {resource}) {
+  function ExamesFeitos( {resource}) {
     const dataExame = new Date(resource.effectiveDateTime);
     const dataFormated = format(new Date(dataExame), 'dd/MM/yyyy')
     const resultadoExame = resource.valueString;
@@ -47,22 +47,20 @@ const ExamesPaciente = ({navigation, route}) => {
   }
 
   return(
-    <FlatList style={{backgroundColor: "#FFF"}}
-      ListHeaderComponent={
-        <ContainerCabecalho style={{flexDirection:"column"}}>
-          <StyledFormAreaExame>
-            <PageTitleExame welcome={true}>Olá, {cpfMask(namePacient) || 'Nome Paciente'} </PageTitleExame>
-            <SubTitleExame welcome={true}>CPF: {cpfMask(idCPF) || 'CPF Paciente'}</SubTitleExame>
-          </StyledFormAreaExame>
-          <Line/>
-          <PageTitleExame>Exame(s)</PageTitleExame>
-        </ContainerCabecalho>
-      }
-      keyExtractor={item => item.resource.id}
-      data={exames1}
-      renderItem={({item})=> <InteressadoItem {...item} />}
-      showsVerticalScrollIndicator={false}
-    />
+    <ContainerCabecalho style={{flexDirection:"column", backgroundColor: "#fff"}}>
+      <StyledFormAreaExame>
+        <PageTitleExame welcome={true}>Olá, {cpfMask(namePacient) || 'Nome Paciente'} </PageTitleExame>
+        <SubTitleExame welcome={true}>CPF: {cpfMask(idCPF) || 'CPF Paciente'}</SubTitleExame>
+      </StyledFormAreaExame>
+      <Line/>
+      <PageTitleExame styles={{}}>Exame(s)</PageTitleExame>
+      <FlatList style={{backgroundColor: "#FFF"}}
+        keyExtractor={item => item.resource.id}
+        data={exames1}
+        renderItem={({item})=> <ExamesFeitos {...item} />}
+        showsVerticalScrollIndicator={false}
+      />
+    </ContainerCabecalho>
   );
 };
 

@@ -7,6 +7,7 @@ import moment from 'moment';
 
 // icons
 import {Octicons} from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'; 
 
 import EditarExameModel from '../../../models/EditarExameModel'
 import { EditarExameService } from '../../../service/EditarExameService';
@@ -18,14 +19,15 @@ import {
   LeftIcon,
   Container,
   PageTitle, 
+  StyledButton,
   SubTitle, 
   StyledFormArea, 
-  StyledButton, 
   StyledTextInput,
   ButtonText,
   Colors,
   MsgBox,
 } from '../../../components/styles';
+
 
 import Dropdown from "../../../components/Dropdown";
 import { cpfMask, hourMask, dateMask } from '../Login/Maskedinput';
@@ -36,7 +38,7 @@ const {brand, darkLight}:any = Colors;
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
 
-export default function EditarExame({route}: any) {
+export default function EditarExame({route, navigation}: any) {
   const exames = route.params.exames
   const cnpj = exames.resource.performer[0].reference.split("/")[1]
   const id = exames.resource.id
@@ -54,40 +56,49 @@ export default function EditarExame({route}: any) {
   const dataExameTemp = dateOfExam + "" + hourOfExam
   const dataExame = moment(dataExameTemp, "DD/MM/YYYY HH:mm").format();
 
-//Modelo do exame e função para editar o exame-------------------------------------------------------------------
+  function FormataStringData(data: any) {
+    var dia  = data.split("/")[0];
+    var mes  = data.split("/")[1];
+    var ano  = data.split("/")[2];
+  
+    return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+    // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
+  }
+
+  //Modelo do exame e função para editar o exame-------------------------------------------------------------------
 
   const exame: EditarExameModel = {
-      resourceType: "Observation",
-      id: `${id}`,
-      identifier: {
-          system: `http://tarea.net.br/fhir/r4/NamingSystem/${cnpj}`,
-          value: `${value}`
-      },
-      meta: {
-          profile: [
-              "http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19"
-          ]
-      },
-      status: "final",
-      code: {
-          coding: [
-              {
-                  system: "http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19",
-                  code: examCode
-              }
-          ]
-      },
-      subject: {
-          reference: `Patient/${CPF.replace(/[\.\-]/g, '')}`
-      },
-      effectiveDateTime: `${dataExame}`,
-      issued: `${dataInsercao}`,
-      performer: [
-          {
-              reference: `Organization/${cnpj}`
-          }
-      ],
-      valueString: result
+    resourceType: "Observation",
+    id: `${id}`,
+    identifier: {
+      system: `http://tarea.net.br/fhir/r4/NamingSystem/${cnpj}`,
+      value: `${value}`
+    },
+    meta: {
+      profile: [
+        "http://tarea.net.br/fhir/r4/StructureDefinition/TesteRapidoCovid19"
+      ]
+    },
+    status: "final",
+    code: {
+      coding: [
+        {
+          system: "http://tarea.net.br/fhir/r4/CodeSystem/NomeExameCovid19",
+          code: examCode
+        }
+      ]
+    },
+    subject: {
+      reference: `Patient/${CPF.replace(/[\.\-]/g, '')}`
+    },
+    effectiveDateTime: `${dataExame}`,
+    issued: `${dataInsercao}`,
+    performer: [
+      {
+        reference: `Organization/${cnpj}`
+      }
+    ],
+    valueString: result
   }
 
   function editarExame() {
@@ -96,7 +107,8 @@ export default function EditarExame({route}: any) {
       if (response.status !== 200){
         alert("Cheque os dados e teve novamente!")
       }
-      console.log(response.status)
+      alert("Exame editado com sucesso!")
+      navigation.navigate('TelaInicial')
     })
     .catch((err) => {alert("Cheque os dados e tente novamente!")})
   }
@@ -107,7 +119,8 @@ export default function EditarExame({route}: any) {
     { label: '94507-1 - Anticorpos IgG', value: '94507-1' },
     { label: '94508-9 - Anticorpos IgM', value: '94508-9' }
   ];
-//-------------------------------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------------------------------
 
   const dadosResultadoExame = [
     { label: 'Detectável', value: 'd' },
@@ -121,11 +134,11 @@ export default function EditarExame({route}: any) {
     }
   }
 
-// form handling
-const handleMessage = (message: any, type = 'FAILED') => {
-  setMessage (message);
-  setMessageType(type);
-};
+  // form handling
+  const handleMessage = (message: any, type = 'FAILED') => {
+    setMessage (message);
+    setMessageType(type);
+  };
 
   return (
     <KeyboardAvoidingWrapper>
@@ -178,14 +191,14 @@ const handleMessage = (message: any, type = 'FAILED') => {
                 />
                 <Label>Resultado do Exame</Label>
                 <Dropdown 
-                    label="Selecione" 
-                    data={dadosResultadoExame} 
-                    onSelect={(valor)=> setResult(valor.label)} 
+                  label="Selecione" 
+                  data={dadosResultadoExame} 
+                  onSelect={(valor)=> setResult(valor.label)} 
                 />
                 <MsgBox type={messageType}>{message}</MsgBox>
                 {(
                   <StyledButton onPress={editarExame}>
-                    <ButtonText>Editar Exame</ButtonText>
+                    <ButtonText><FontAwesome name="edit" size={22} color="white" style={{paddingRight: '10px'}} />Editar Exame</ButtonText>
                   </StyledButton>
                 )}
               </StyledFormArea>

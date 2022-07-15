@@ -29,18 +29,12 @@ import {
   StyledButton, 
   StyledTextInput,
   ButtonText,
-  Line,
-  ExtraView,
-  ExtraText,
-  TextLink,
-  TextLinkContent,
   Colors,
   MsgBox,
 } from '../../../components/styles';
 
 // Colors
 const {brand, darkLight, primary} = Colors;
-
 
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../../../components/KeyboardAvoidingWrapper';
@@ -104,7 +98,7 @@ const Login = () => {
     });
   }, [])
 
-  const senhaPadrao = "paciente2022";
+  const senhaPadrao = "tarea";
 
   const handleLoginPaciente =  (credentials, setSubmitting) => {
     const CPF = credentials.CPF;
@@ -289,19 +283,6 @@ const Login = () => {
                       <ActivityIndicator size="large" color={primary} />
                     </StyledButton>
                   )}
-                  <Line/>
-                  <ExtraView>
-                    <ExtraText>Esqueceu sua senha?</ExtraText>
-                    <TextLink onPress={() => navigation.navigate('RestaurarSenha')}>
-                      <TextLinkContent>Recuperar</TextLinkContent>
-                    </TextLink>
-                  </ExtraView>
-                  <ExtraView>
-                    <ExtraText>Não possui conta?</ExtraText>
-                    <TextLink onPress={() => navigation.navigate('Cadastrar')}>
-                      <TextLinkContent>Cadastrar</TextLinkContent>
-                    </TextLink>
-                  </ExtraView>
                 </StyledFormArea>
               )}
             </Formik>
